@@ -10,7 +10,7 @@ const { discordToken } = require('./config.json');
 const clientOptions = { restRequestTimeout: 60000 }; // 60 seconds
 
 // * Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] }, clientOptions);
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.MessageContent] }, clientOptions);
 
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
