@@ -1,12 +1,12 @@
 {
-  "name": "boyosbot3",
+  "name": "BoyosBot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Discord bot for The Boyos",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Noah Osterhout",
+  "author": "The Boyos",
   "license": "ISC",
   "dependencies": {
     "@discordjs/opus": "^0.8.0",
