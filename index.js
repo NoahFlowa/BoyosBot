@@ -64,7 +64,7 @@ class Queue {
     }
 
     // Create an audio resource from the song URL using ytdl-core, FFmpeg, discordjs/opus and sodium
-    const resource = createAudioResource(ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', opusEncoded: true, encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'] }), { inputType: 'ogg/opus', inlineVolume: true, encryption: sodium });
+    const resource = createAudioResource(ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', opusEncoded: true, encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'], highWaterMark: 1 << 25}), { inputType: 'ogg/opus', inlineVolume: true, encryption: sodium });
 
     // Play the audio resource
     this.player.play(resource);
