@@ -1,8 +1,8 @@
 FROM node:16-alpine
 WORKDIR /usr/src/app
 COPY package*.json ./
+RUN apk add libsodium libsodium-dev build-base libtool make autoconf automake python3 bash
 RUN npm install
 COPY . .
-EXPOSE 80, 443
-CMD [ 'node', 'index.js' ]
-
+EXPOSE 443
+CMD [ "node", "." ]
