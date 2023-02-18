@@ -4,10 +4,6 @@ const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerSta
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 
-// Require FFmpeg and discordjs/opus
-const ffmpeg = require('ffmpeg-static');
-const { OpusEncoder } = require('@discordjs/opus');
-
 // Require sodium for encryption
 const sodium = require('sodium');
 
@@ -39,7 +35,7 @@ class Queue {
         if (!this.player) {
         this.player = createAudioPlayer();
         // Subscribe the connection to the player
-        this.connection.subscribe(this.player);
+        await this.connection.subscribe(this.player);
         // Listen for the player events
         this.player.on(AudioPlayerStatus.Idle, () => {
             // Remove the finished song from the queue
