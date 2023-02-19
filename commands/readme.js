@@ -11,7 +11,7 @@ module.exports = {
         .setURL('https://NoahOsterhout.com')
         .setAuthor({ name: '@NoahFlowa & @wymiller', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
         .setDescription('The Boyos Bot is a bot created by Noah Osterhout and Wyatt Miller. It is a bot that is used to play music in a voice channel, and to moderate the server. It is a work in progress, and is currently in beta. If you have any questions, please contact Noah Osterhout or Wyatt Miller.')
-        .setThumbnail('https://cdn.discordapp.com/avatars/852202202000578580/0c1b2b0b0b0b0b0b0b0b0b0b0b0b0b0b.webp?size=256')
+        .setThumbnail('https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024')
         .addFields(
             { name: 'Commands available for the bot', value: '\u200B' },
             { name: '\u200B', value: '\u200B' },
@@ -21,9 +21,9 @@ module.exports = {
             { name: 'Server', value: 'Tells user about the server', inline: true },
             { name: 'User', value: 'Tells user about user', inline: true },
         )
-        .setImage('https://cdn.discordapp.com/avatars/852202202000578580/0c1b2b0b0b0b0b0b0b0b0b0b0b0b0b0b.webp?size=256')
+        .setImage('https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024')
         .setTimestamp()
-        .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/852202202000578580/0c1b2b0b0b0b0b0b0b0b0b0b0b0b0b0b.webp?size=256'});
+        .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024'});
 
         await interaction.reply({ embeds: [readmeEmbed] });
 	},
