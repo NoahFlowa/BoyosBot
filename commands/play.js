@@ -1,82 +1,28 @@
 // Require the necessary discord.js classes
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, InteractionResponse } = require("discord.js");
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
+const fs = require('fs');
 
 // Require sodium for encryption
 const sodium = require('sodium');
 
 // Create a queue class
-class Queue {
-    constructor() {
-        this.songs = []; // An array of songs
-        this.connection = null; // The voice connection
-        this.player = null; // The audio player
-    }
-
-    // Add a song to the queue
-    add(song) {
-        this.songs.push(song);
-    }
-
-    // Play the first song in the queue
-    async play() {
-        // If the queue is empty, return
-        if (this.songs.length === 0) return;
-
-        // Get the first song in the queue
-        const song = this.songs[0];
-
-        // If there is no connection, return
-        if (!this.connection) return;
-
-        // If there is no player, create one
-        if (!this.player) {
-        this.player = createAudioPlayer();
-        // Subscribe the connection to the player
-        await this.connection.subscribe(this.player);
-        // Listen for the player events
-        this.player.on(AudioPlayerStatus.Idle, () => {
-            // Remove the finished song from the queue
-            this.songs.shift();
-            // Play the next song
-            this.play();
-        });
-        this.player.on('error', error => {
-            // Log the error
-            console.error(error);
-            // Remove the errored song from the queue
-            this.songs.shift();
-            // Play the next song
-            this.play();
-        });
-        }
-
-        // Create an audio resource from the song URL using ytdl-core, FFmpeg, discordjs/opus and sodium
-        const resource = createAudioResource(ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', opusEncoded: true, encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'], highWaterMark: 1 << 25}), { inputType: 'ogg/opus', inlineVolume: true, encryption: sodium });
-
-        // Play the audio resource
-        this.player.play(resource);
-    }
-}
-
-// Create a global queue map
-const queueMap = new Map();
 
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('play')
-		.setDescription('Plays music in a voice channel requested by the user!')
+    data: new SlashCommandBuilder()
+        .setName('play')
+        .setDescription('Plays music in a voice channel requested by the user!')
         // Add a string option for the youtube URL or search query
         .addStringOption((option) =>
             option
-            .setName('input')
-            .setDescription('The youtube URL or search query')
-            .setRequired(true)
+                .setName('input')
+                .setDescription('The youtube URL or search query')
+                .setRequired(true)
         ),
-	async execute(interaction) {
+    async execute(interaction) {
         // If the interaction is not a slash command, return
         if (!interaction.isCommand()) return;
 
@@ -143,5 +89,5 @@ module.exports = {
                 await interaction.followUp(`Added to the queue: ${video.title} (${url})`);
             }
         }
-	},
+    },
 };
