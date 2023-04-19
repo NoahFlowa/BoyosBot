@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require("discord.js");
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
-const { Queue, queueMap } = require('./queueManager');
+const { Queue, queueMap } = require('../classes/queueManager');
 
 // Require sodium for encryption
 const sodium = require('sodium');

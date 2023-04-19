@@ -1,6 +1,6 @@
 // Require the necessary discord.js classes
 const { SlashCommandBuilder } = require('discord.js');
-const { queueMap } = require('./queueManager');
+const { queueMap } = require('../classes/queueManager');
 
 module.exports = {
     data: new SlashCommandBuilder()
