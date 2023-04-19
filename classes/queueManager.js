@@ -1,6 +1,6 @@
 // Import shit
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
-const ytdl = require('ytdl-core');
+const ytdlDiscord = require('ytdl-core-discord');
 const ytSearch = require('yt-search');
 
 // Require sodium for encryption
@@ -18,12 +18,12 @@ class Queue {
 		this.songs.push(song);
 	}
 
-	play() {
+	async play() {
 		if (!this.connection || this.songs.length === 0) return;
 
 		const song = this.songs[0];
 
-		const resource = createAudioResource(ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', opusEncoded: true, encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'], highWaterMark: 1 << 25 }), { inputType: 'ogg/opus', inlineVolume: true, encryption: sodium });
+		const resource = createAudioResource(await ytdlDiscord(song.url, { filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25 }), { inputType: 'webm/opus', inlineVolume: true });
 		resource.volume.setVolume(0.5);
 
 		this.player.play(resource);
