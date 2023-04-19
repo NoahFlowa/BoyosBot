@@ -1,3 +1,7 @@
+// Import shit
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
+
+
 // Create a queue class
 class Queue {
     constructor() {
