@@ -8,62 +8,50 @@ const sodium = require('sodium');
 
 // Create a queue class
 class Queue {
-    constructor() {
-        this.songs = []; // An array of songs
-        this.connection = null; // The voice connection
-        this.player = null; // The audio player
-    }
+	constructor() {
+		this.songs = [];
+		this.connection = null;
+		this.player = createAudioPlayer();
+	}
 
-    // Add a song to the queue
-    add(song) {
-        this.songs.push(song);
-    }
+	add(song) {
+		this.songs.push(song);
+	}
 
-    // Play the first song in the queue
-    async play() {
-        // If the queue is empty, return
-        if (this.songs.length === 0) return;
+	play() {
+		if (!this.connection || this.songs.length === 0) return;
 
-        // Get the first song in the queue
-        const song = this.songs[0];
+		const song = this.songs[0];
 
-        // If there is no connection, return
-        if (!this.connection) return;
+		const resource = createAudioResource(ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', opusEncoded: true, encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'], highWaterMark: 1 << 25 }), { inputType: 'ogg/opus', inlineVolume: true, encryption: sodium });
+		resource.volume.setVolume(0.5);
 
-        // If there is no player, create one
-        if (!this.player) {
-        this.player = createAudioPlayer();
-        // Subscribe the connection to the player
-        await this.connection.subscribe(this.player);
-        // Listen for the player events
-        this.player.on(AudioPlayerStatus.Idle, () => {
-            // Remove the finished song from the queue
-            this.songs.shift();
-            // Play the next song
-            this.play();
-        });
-        this.player.on('error', error => {
-            // Log the error
-            console.error(error);
-            // Remove the errored song from the queue
-            this.songs.shift();
-            // Play the next song
-            this.play();
-        });
-        }
+		this.player.play(resource);
+		this.connection.subscribe(this.player);
 
-        // Create an audio resource from the song URL using ytdl-core, FFmpeg, discordjs/opus and sodium
-        const resource = createAudioResource(ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', opusEncoded: true, encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'], highWaterMark: 1 << 25}), { inputType: 'ogg/opus', inlineVolume: true, encryption: sodium });
+		this.player.on(AudioPlayerStatus.Idle, () => {
+			this.songs.shift();
+			this.play();
+		});
 
-        // Play the audio resource
-        this.player.play(resource);
-    }
+		this.player.on('error', error => {
+			console.error(`Error: ${error.message}`);
+			this.songs.shift();
+			this.play();
+		});
+	}
+
+	stop() {
+		this.songs = [];
+		this.player.stop();
+		this.connection.destroy();
+		this.connection = null;
+	}
 }
 
-// Create a global queue map
 const queueMap = new Map();
 
 module.exports = {
-    Queue,
-    queueMap
+	Queue,
+	queueMap,
 };
