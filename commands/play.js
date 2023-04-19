@@ -29,9 +29,9 @@ module.exports = {
                 let video;
     
                 // Check if input is a valid URL
-                if (ytdl.validateURL(input)) {
+                if (ytdlDiscord.validateURL(input)) {
                     // Get the video information from the URL
-                    video = await ytdl.getInfo(input);
+                    video = await ytdlDiscord.getInfo(input);
                 } else {
                     // Search for youtube videos using yt-search
                     const videos = await ytSearch(input);
