@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
-const { queueMap } = require('../classes/queueManager');
+const { Queue, queueMap } = require('../classes/queueManager');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -22,11 +22,15 @@ module.exports = {
 			return;
 		}
 
-		joinVoiceChannel({
+		const connection = joinVoiceChannel({
 			channelId: channel.id,
 			guildId: channel.guild.id,
 			adapterCreator: channel.guild.voiceAdapterCreator,
 		});
+
+		const newQueue = new Queue();
+		newQueue.connection = connection;
+		queueMap.set(guildId, newQueue);
 
 		await interaction.reply('Joined the voice channel!');
 	},
