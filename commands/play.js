@@ -1,7 +1,7 @@
 // Require the necessary discord.js classes
 const { SlashCommandBuilder } = require("discord.js");
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
-const ytdlDiscord = require('ytdl-core-discord');
+const { joinVoiceChannel } = require('@discordjs/voice');
+const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 const { Queue, queueMap } = require('../classes/queueManager');
 
@@ -29,9 +29,9 @@ module.exports = {
                 let video;
     
                 // Check if input is a valid URL
-                if (ytdlDiscord.validateURL(input)) {
+                if (ytdl.validateURL(input)) {
                     // Get the video information from the URL
-                    video = await ytdlDiscord.getInfo(input);
+                    video = await ytdl.getInfo(input);
                 } else {
                     // Search for youtube videos using yt-search
                     const videos = await ytSearch(input);
