@@ -1,59 +1,51 @@
-// Require the necessaary discord.js classes
-const { Queue, queueMap } = require('./queueManager');
-const { SlashCommandBuilder } = require("discord.js");
-const { Queue, queueMap } = require("./queueManager");
-const ytSearch = require('yt-search');
+// Require the necessary discord.js classes
+const { SlashCommandBuilder } = require('discord.js');
+const { queueMap } = require('./queueManager');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('queue')
-        .setDescription('Manage the song queue')
+        .setDescription('Manage the music queue')
         .addSubcommand(subcommand =>
             subcommand
-                .setName('add')
-                .setDescription('Add a song to the queue')
-                .addStringOption(option =>
-                    option
-                        .setName('input')
-                        .setDescription('The YouTube URL or search query')
-                        .setRequired(true)))
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('remove')
-                .setDescription('Remove a song from the queue by its position')
-                .addIntegerOption(option =>
-                    option
-                        .setName('position')
-                        .setDescription('Position of the song in the queue')
-                        .setRequired(true))),
+                .setName('play')
+                .setDescription('Start playing the queue')
+        ),
     async execute(interaction) {
-        const guildId = interaction.guildId;
-        let queue = queueMap.get(guildId);
-        if (!queue) {
-            queue = new Queue();
-            queueMap.set(guildId, queue);
-        }
+        // If the interaction is not a slash command, return
+        if (!interaction.isCommand()) return;
 
-        if (interaction.options.getSubcommand() === 'add') {
-            const input = interaction.options.getString('input');
-            await interaction.reply(`Searching for ${input}...`);
-            const videos = await ytSearch(input);
+        // If the slash command is /queue, execute this code
+        if (interaction.commandName === 'queue') {
+            // Get the guild id of the interaction
+            const guildId = interaction.guildId;
 
-            if (!videos || !videos.videos || !videos.videos.length) {
-                await interaction.followUp('No videos found.');
+            // Get the queue for the guild
+            const queue = queueMap.get(guildId);
+
+            // If there's no queue, reply with an error message and return
+            if (!queue) {
+                await interaction.reply('There is no queue for this server.');
                 return;
             }
 
-            const video = videos.videos[0];
-            queue.add(video);
-            await interaction.followUp(`Added to the queue: ${video.title} (${video.url})`);
-        } else if (interaction.options.getSubcommand() === 'remove') {
-            const position = interaction.options.getInteger('position');
-            if (position > 0 && position <= queue.songs.length) {
-                const removedSong = queue.songs.splice(position - 1, 1);
-                await interaction.reply(`Removed from the queue: ${removedSong[0].title} (${removedSong[0].url})`);
-            } else {
-                await interaction.reply('Invalid position.');
+            // If the subcommand is "play", execute this code
+            if (interaction.options.getSubcommand() === 'play') {
+                // If the bot is already playing, reply with an error message and return
+                if (queue.player && queue.player.state.status !== 'idle') {
+                    await interaction.reply('The bot is already playing.');
+                    return;
+                }
+
+                // If the queue is empty, reply with an error message and return
+                if (queue.songs.length === 0) {
+                    await interaction.reply('The queue is empty.');
+                    return;
+                }
+
+                // Start playing the queue
+                queue.play();
+                await interaction.reply('Starting to play the queue.');
             }
         }
     },

@@ -9,17 +9,17 @@ const { Queue, queueMap } = require('./queueManager');
 const sodium = require('sodium');
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('play')
-        .setDescription('Plays music in a voice channel requested by the user!')
+	data: new SlashCommandBuilder()
+		.setName('play')
+		.setDescription('Plays music in a voice channel requested by the user!')
         // Add a string option for the youtube URL or search query
         .addStringOption((option) =>
             option
-                .setName('input')
-                .setDescription('The youtube URL or search query')
-                .setRequired(true)
+            .setName('input')
+            .setDescription('The youtube URL or search query')
+            .setRequired(true)
         ),
-    async execute(interaction) {
+	async execute(interaction) {
         // If the interaction is not a slash command, return
         if (!interaction.isCommand()) return;
 
@@ -63,9 +63,6 @@ module.exports = {
                     queueMap.set(guildId, queue);
                 }
 
-                // Add the song to the queue
-                queue.add(video);
-
                 // If there is no connection, join the voice channel and set the connection
                 if (!queue.connection) {
                     queue.connection = joinVoiceChannel({
@@ -75,30 +72,22 @@ module.exports = {
                     });
                 }
 
-                // Modify the error event listener in the queue class
-                queue.player.on('error', error => {
-                    // Log the error
-                    console.error(error);
-                    // Remove the errored song from the queue
-                    queue.songs.shift();
-                    // Play the next song
-                    queue.play();
-                    // Inform the user who requested the song that there was a problem
-                    interaction.followUp(`${interaction.user}, there was a problem playing the song. Moving to the next song in the queue, if any.`);
-                });
-
-                // If there is only one song in the queue, play it
-                if (queue.songs.length === 1) {
+                // Check if there is a queue
+                if (queue.songs.length === 0) {
+                    // If no queue, play the song immediately
+                    queue.add(video);
                     queue.play();
                     await interaction.followUp(`Now playing: ${video.title} (${video.url})`);
                 } else {
-                    // Otherwise, reply with a message that shows the song is added to the queue
+                    // If there is a queue, add the song to the end of the queue
+                    queue.add(video);
                     await interaction.followUp(`Added to the queue: ${video.title} (${video.url})`);
                 }
             } catch (error) {
-            console.error('Error searching for video:', error);
-            await interaction.followUp(`${interaction.user}, there was a problem searching for the video. Please try again later.`);
+                // If there is an error, reply with an error message and return
+                console.error('Error searching for video:', error);
+                await interaction.followUp('${interaction.user}, there was a problem searching for the video. Please try again later.');
             }
         }
-    },
+	},
 };
