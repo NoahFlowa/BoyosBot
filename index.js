@@ -2,10 +2,12 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-const { deployCommands } = require('./deploy-commands');
 
 // * Require ENV variables
 const { discordToken } = require('./config.json');
+
+// * Require the deployCommands function
+const { deployCommands } = require('./deploy-commands.js');
 
 // * Create client options to be passed to the client constructor
 const clientOptions = { restRequestTimeout: 60000 }; // 60 seconds
@@ -43,6 +45,7 @@ for (const file of commandFiles) {
 }
 
 // * Log in to Discord with your client's token
-client.login(discordToken).then(() => {
-    deployCommands();
+client.login(discordToken).then(async () => {
+    // * Deploy commands after the bot has logged in
+    await deployCommands();
 });
