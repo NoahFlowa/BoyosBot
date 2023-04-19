@@ -27,7 +27,11 @@ module.exports = {
 
 		if (!queue) {
 			queue = new Queue();
-			queue.connection = await interaction.member.voice.channel.join();
+			queue.connection = joinVoiceChannel({
+				channelId: channel.id,
+				guildId: channel.guild.id,
+				adapterCreator: channel.guild.voiceAdapterCreator,
+			});
 			queueMap.set(guildId, queue);
 		}
 
