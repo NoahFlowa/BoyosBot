@@ -1,7 +1,7 @@
 // Require the necessary discord.js classes
 const { SlashCommandBuilder } = require("discord.js");
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
-const ytdl = require('ytdl-core');
+const ytdlDiscord = require('ytdl-core-discord');
 const ytSearch = require('yt-search');
 const { Queue, queueMap } = require('../classes/queueManager');
 
