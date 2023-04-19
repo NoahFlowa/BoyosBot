@@ -44,3 +44,7 @@ const rest = new REST().setToken(discordToken);
 		console.error(error);
 	}
 })();
+
+module.exports = {
+    deployCommands
+};

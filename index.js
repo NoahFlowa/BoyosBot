@@ -2,6 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { deployCommands } = require('./deploy-commands');
 
 // * Require ENV variables
 const { discordToken } = require('./config.json');
@@ -42,4 +43,6 @@ for (const file of commandFiles) {
 }
 
 // * Log in to Discord with your client's token
-client.login(discordToken);
+client.login(discordToken).then(() => {
+    deployCommands();
+});
