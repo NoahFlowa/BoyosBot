@@ -1,6 +1,6 @@
 // Require the necessary discord.js classes
 const { SlashCommandBuilder } = require("discord.js");
-const { joinVoiceChannel } = require('@discordjs/voice');
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 const { Queue, queueMap } = require('../classes/queueManager');
@@ -43,8 +43,7 @@ module.exports = {
                     }
     
                     // Get the first video from the search results
-                    const firstVideo = videos.videos[0];
-                    video = await ytdl.getInfo(firstVideo.url);
+                    video = videos.videos[0];
                 }
     
                 // Get the voice channel of the user who requested the command
@@ -81,11 +80,11 @@ module.exports = {
                     // If no queue, play the song immediately
                     queue.add(video);
                     queue.play();
-                    await interaction.editReply(`Now playing: ${video.videoDetails.title} (${video.videoDetails.video_url})`);
+                    await interaction.editReply(`Now playing: ${video.title} (${video.url})`);
                 } else {
                     // If there is a queue, add the song to the end of the queue
                     queue.add(video);
-                    await interaction.editReply(`Added to the queue: ${video.videoDetails.title} (${video.videoDetails.video_url})`);
+                    await interaction.editReply(`Added to the queue: ${video.title} (${video.url})`);
                 }
             } catch (error) {
                 // If there is an error, reply with an error message and return
@@ -93,5 +92,5 @@ module.exports = {
                 await interaction.editReply('There was a problem searching for the video. Please try again later.');
             }
         }
-    },
+    },        
 };
