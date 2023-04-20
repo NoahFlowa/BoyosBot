@@ -16,6 +16,24 @@ function connectToDatabase() {
     return mysqlConnection;
 }
 
+async function getCommandStatus(commandName) {
+    return new Promise((resolve, reject) => {
+        const mysqlConnection = connectToDatabase();
+        mysqlConnection.connect();
+
+        const sql = `SELECT commandEnabled FROM activeCommands WHERE commandName = ?`;
+        mysqlConnection.query(sql, [commandName], (err, result) => {
+            if (err) {
+                mysqlConnection.end();
+                reject(err);
+            } else {
+                mysqlConnection.end();
+                resolve(result.length > 0 ? result[0].commandEnabled : 1);
+            }
+        });
+    });
+}
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('cowboyindian')
@@ -31,45 +49,21 @@ module.exports = {
                 .setDescription('Give random amount of points to the Indians!')
         ),             
     async execute(interaction) {
-        // If the interaction is not a slash command, return
-        if (!interaction.isCommand()) return;
+        // Check if the command is enabled
+        const commandStatus = await getCommandStatus("cowboyindian");
 
-        // Connect to database
-        var mysqlConnection = connectToDatabase();
-        mysqlConnection.connect();
-
-        // Check the activeCommands table and see if this command is active to run
-        var sql = "SELECT * FROM activeCommands WHERE commandName = 'cowboyindian'";
-        mysqlConnection.query(sql, function (err, result) {
-            if (err) {
-                mysqlConnection.end();
-                throw err;
-            }
-
-            // store the results in a variable
-            var commandData = result;
-            console.log(commandData);
-
-        });
-
-        // close the connection
-        mysqlConnection.end();
-
-        // If the command is not active 0, return
-        if (commandData.active == 0) {
-            // Create embed
+        // If commandEnabled is 0, send an embedded message saying that the command can only be used in November
+        if (commandStatus === 0) {
             const embed = new EmbedBuilder()
-            .setTitle('Cowboy or Indian?')
-            .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
+                .setTitle("Cowboy or Indian?")
+                .setDescription("This command can only be used in November.")
+                .setColor(0xff0000);
 
-            // add the error to an embed
-            embed.addFields({ name: 'Error', value: 'This command is not active!  This command will active in November!'});
-            // set the color to red
-            embed.setColor(0xff0000);
-
-            // send the embed
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
+        
+        // If the interaction is not a slash command, return
+        if (!interaction.isCommand()) return;
 
         // If the slash command is /cowboyindian and subcommand is cowboy, execute this code
         if (interaction.commandName === 'cowboyindian' && interaction.options.getSubcommand() === 'cowboy') {
