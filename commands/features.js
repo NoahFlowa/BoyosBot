@@ -69,7 +69,24 @@ module.exports = {
                 await interaction.reply(`Thank you for your feature request: "${request}"`);
             } catch (error) {
                 console.error(error);
-                await interaction.reply('There was an error while executing this command!');
+                await interaction.reply('There was an error while executing this command!  Error has been logged!');
+
+                // log error to the botErrorsLog table in the database
+                mysqlConnection.connect();
+
+                // cleanse input string
+                const cleansedError = error.replace(/'/g, "''");
+
+                // get user id
+                const userID = interaction.user.id;
+
+                // insert request into database
+                mysqlConnection.query('INSERT INTO botErrorsLog (errorMessage, errorLocation, encounteredBy) VALUES (?)', [cleansedError, '../commands/features.js     Feature Request', userID], function (error, results, fields) {
+                    if (error) throw error;
+                });
+
+                // disconnect from database
+                mysqlConnection.end();
             }
         }
 
@@ -92,10 +109,10 @@ module.exports = {
         
                     const featuresListEmbed = new EmbedBuilder()
                         .setColor(0x22c2fc)
-                        .setTitle('The Boyos Bot Changes')
+                        .setTitle('Your Feature Requests')
                         .setURL('https://NoahOsterhout.com')
                         .setAuthor({ name: '@NoahFlowa & @wymiller', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256', url: 'https://NoahOsterhout.com' })
-                        .setDescription('The Boyos Bot is a bot created by Noah Osterhout and Wyatt Miller. It is a bot that is used to play music in a voice channel, and to moderate the server. It is a work in progress, and is currently in beta. If you have any questions, please contact Noah Osterhout or Wyatt Miller.')
+                        .setDescription('Here are all of your feature requests for The Boyos Bot.')
                         .setThumbnail('https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024')
                         .setTimestamp()
                         .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
@@ -114,7 +131,24 @@ module.exports = {
                 mysqlConnection.end();
             } catch (error) {
                 console.error(error);
-                await interaction.reply('There was an error while executing this command!');
+                await interaction.reply('There was an error while executing this command!  Error has been logged!');
+
+                // log error to the botErrorsLog table in the database
+                mysqlConnection.connect();
+
+                // cleanse input string
+                const cleansedError = error.replace(/'/g, "''");
+
+                // get user id
+                const userID = interaction.user.id;
+
+                // insert request into database
+                mysqlConnection.query('INSERT INTO botErrorsLog (errorMessage, errorLocation, encounteredBy) VALUES (?)', [cleansedError, '../commands/features.js     Feature List', userID], function (error, results, fields) {
+                    if (error) throw error;
+                });
+
+                // disconnect from database
+                mysqlConnection.end();
             }
         }
     },
