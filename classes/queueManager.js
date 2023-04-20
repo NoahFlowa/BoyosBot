@@ -1,6 +1,7 @@
 // Import shit
-const { createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
 const ytdl = require('ytdl-core');
+const ytSearch = require('yt-search');
 
 // Require sodium for encryption
 const sodium = require('sodium');
