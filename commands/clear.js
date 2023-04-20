@@ -99,10 +99,6 @@ async function execute(interaction) {
           ephemeral: true,
         });
 
-        // Delete the reply after 3 seconds
-        setTimeout(() => {
-          reply.delete();
-        }, 3000);
       } catch (error) {
         console.error(error);
         const deletionErrorEmbed = new EmbedBuilder()
