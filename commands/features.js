@@ -1,5 +1,5 @@
 // Require the necessary discord.js classes
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, Embed } = require("discord.js");
 
 // Import mysql connection
 const mysql = require("mysql");
@@ -91,7 +91,7 @@ module.exports = {
                     }
         
                     // Create the embed object
-                    const featuresListEmbed = new MessageEmbed()
+                    const featuresListEmbed = new EmbedBuilder()
                         .setColor(0x22c2fc)
                         .setTitle('Your Feature Requests for The Boyos Bot')
                         .setURL('https://NoahOsterhout.com')
