@@ -62,7 +62,7 @@ module.exports = {
 
 				// add fields
 				gameServers.forEach(gameServer => {
-					embed.addFields(gameServer.serverName, `Game: ${gameServer.serverGame}\nIP: ${gameServer.serverIP}\nPort: ${gameServer.serverPort}\nPassword: ${gameServer.serverPassword}\nAdded by: <@${gameServer.userID}>`);
+					embed.addFields({ name: gameServer.serverName, value: `Game: ${gameServer.serverGame}\nIP: ${gameServer.serverIP}\nPort: ${gameServer.serverPort}\nPassword: ${gameServer.serverPassword}\nAdded by: <@${gameServer.userID}>` });
 				});
 
 				// send embed
