@@ -13,7 +13,7 @@ var mysqlConnection = mysql.createConnection({
 module.exports = {
 	name: 'interactionCreate',
 	once: false,
-	async execute(interaction, client) {
+	async execute(interaction) {
 		if (!interaction.isCommand()) return;
 
 		const command = interaction.client.commands.get(interaction.commandName);
@@ -24,7 +24,7 @@ module.exports = {
 		}
 
 		try {
-			await command.execute(interaction, client);
+			await command.execute(interaction);
 		} catch (error) {
 			console.error(`Error executing ${interaction.commandName}`);
 			console.error(error);

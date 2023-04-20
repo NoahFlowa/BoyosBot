@@ -37,7 +37,7 @@ module.exports = {
 				.setDescription('Remove a game server from the list of game servers ran by The Boyos')
 				.addStringOption(option => option.setName('server').setDescription('Enter the name of the server').setRequired(true))
 		),
-	async execute(interaction, client) {
+	async execute(interaction) {
 		// If the interaction is not a slash command, return
 		if (!interaction.isCommand()) return;
 
@@ -74,16 +74,9 @@ module.exports = {
                 .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
 
 				// add fields
-                gameServers.forEach(gameServer => {
-                    const user = client.users.cache.get(gameServer.userID);
-                    const mention = user ? `<@${user.id}>` : 'Unknown User';
-
-                    embed.addFields({
-                        name: gameServer.serverName,
-                        value: `Game: ${gameServer.serverGame}\nIP: ${gameServer.serverIP}\nPort: ${gameServer.serverPort}\nPassword: ${gameServer.serverPassword}\nAdded by: ${mention}`
-                    });
-                });
-
+				gameServers.forEach(gameServer => {
+					embed.addFields({ name: gameServer.serverName, value: `Game: ${gameServer.serverGame}\nIP: ${gameServer.serverIP}\nPort: ${gameServer.serverPort}\nPassword: ${gameServer.serverPassword}\nAdded by: <@${gameServer.userID}>` });
+				});
 
                 // add extra spacing
                 embed.addFields({ name: '\u200B', value: '\u200B' });
@@ -128,8 +121,9 @@ module.exports = {
 					password = 'none';
 				}
 
-				// get userID
-				const userID = interaction.user.id;
+				// get user display name
+                const userID = interaction.member.displayName;
+
 
 				// check if server already exists
 				const serverExists = gameServers.some(gameServer => gameServer.serverName === serverName);
