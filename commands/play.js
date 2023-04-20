@@ -44,6 +44,12 @@ module.exports = {
     
                     // Get the first video from the search results
                     video = videos.videos[0];
+
+                    // Check if the video is defined
+                    if (!video) {
+                        await interaction.editReply('No videos found.');
+                        return;
+                    }
                 }
     
                 // Get the voice channel of the user who requested the command
