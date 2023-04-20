@@ -96,6 +96,11 @@ module.exports = {
 				const port = interaction.options.getString('port');
 				const password = interaction.options.getString('password');
 
+				// if password is null, set it to 'none'
+				if (password === null) {
+					password = 'none';
+				}
+
 				// get userID
 				const userID = interaction.user.id;
 
