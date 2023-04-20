@@ -71,7 +71,7 @@ module.exports = {
                         embed.setColor(0xFF0000);
                         // if the user has exceeded the max requests per week, return with an embed description for the error
                         embed.setDescription(`You have already made ${maxRequestsPerWeek} feature requests this week. Please try again next week.`);
-                        return interaction.reply({ embeds: [embed] });
+                        return interaction.reply({ embeds: [embed], ephemeral: true });
                     }
                 });
 
@@ -94,7 +94,7 @@ module.exports = {
                 embed.setDescription(`Thank you for your feature request: "${request}"`);
 
                 // reply to user
-                await interaction.reply({ embeds: [embed] });
+                await interaction.reply({ embeds: [embed], ephemeral: true });
             } catch (error) {
                 console.error(error);
 
@@ -123,6 +123,9 @@ module.exports = {
                         throw error;
                     }
                 });
+
+                // reply to user
+                await interaction.reply({ embeds: [embed], ephemeral: true });
 
                 // disconnect from database
                 mysqlConnection.end();

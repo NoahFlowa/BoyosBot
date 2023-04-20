@@ -55,7 +55,7 @@ async function execute(interaction) {
           .setTitle("Error")
           .setColor(0xff0000)
           .setDescription("An error occurred while checking your permissions.");
-        return interaction.reply({ embeds: [errorEmbed] });
+        return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
       }
 
       if (results.length === 0) {
@@ -66,7 +66,7 @@ async function execute(interaction) {
           .setDescription("You do not have permission to use this command.");
 
         mysqlConnection.end();
-        return interaction.reply({ embeds: [embed] });
+        return interaction.reply({ embeds: [embed], ephemeral: true });
       }
 
       // User exists and has permission
@@ -95,7 +95,8 @@ async function execute(interaction) {
           .setDescription(`Deleted ${amount} messages.`);
 
         const reply = await interaction.reply({
-          embeds: [replyEmbed]
+          embeds: [replyEmbed],
+          ephemeral: true,
         });
 
       } catch (error) {
@@ -104,7 +105,7 @@ async function execute(interaction) {
           .setTitle("Error")
           .setColor(0xff0000)
           .setDescription("An error occurred while trying to delete messages.");
-        interaction.reply({ embeds: [deletionErrorEmbed] });
+        interaction.reply({ embeds: [deletionErrorEmbed], ephemeral: true });
       } finally {
         // Close the database connection
         mysqlConnection.end();

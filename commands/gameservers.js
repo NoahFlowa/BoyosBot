@@ -139,7 +139,7 @@ module.exports = {
                     mysqlConnection.end();
 
                     // send embed
-                    return interaction.reply({ embeds: [embed] });
+                    return interaction.reply({ embeds: [embed], ephemeral: true });
 				}
 
 				// Check to see if there are less than 10 servers in the database from the same user
@@ -156,7 +156,7 @@ module.exports = {
                     mysqlConnection.end();
 
                     // send embed
-                    return interaction.reply({ embeds: [embed] });
+                    return interaction.reply({ embeds: [embed], ephemeral: true });
 				}
 
 				// insert request into database (schema: serverGame, serverName, serverIP, serverPort, serverPassword, userID)
@@ -174,7 +174,7 @@ module.exports = {
                     mysqlConnection.end();
 
                     // send embed
-                    interaction.reply({ embeds: [embed] });
+                    interaction.reply({ embeds: [embed], ephemeral: true });
 				});
 			});
 		}
@@ -215,7 +215,7 @@ module.exports = {
                     embed.setColor(0xFF0000);
 
                     // send embed
-                    return interaction.reply({ embeds: [embed] });
+                    return interaction.reply({ embeds: [embed], ephemeral: true });
 				}
 
 				// check if user is the one who added the server or is noahs userID (noahs userID is 215624149597421568)
@@ -228,7 +228,7 @@ module.exports = {
                     embed.setColor(0xFF0000);
 
                     // send embed
-                    return interaction.reply({ embeds: [embed] });
+                    return interaction.reply({ embeds: [embed], ephemeral: true });
 				}
 
 				// delete server from database
@@ -249,7 +249,7 @@ module.exports = {
                     mysqlConnection.end();
 
                     // send embed
-                    return interaction.reply({ embeds: [embed] });
+                    return interaction.reply({ embeds: [embed], ephemeral: true });
 				});
 			});
 		}
