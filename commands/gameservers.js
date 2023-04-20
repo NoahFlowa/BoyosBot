@@ -75,6 +75,12 @@ module.exports = {
 
 		// If the slash command is /server and subcommand is add, execute this code
 		if (interaction.commandName === 'gameserver' && interaction.options.getSubcommand() === 'add') {
+            // create master embed for all messages
+            const embed = new EmbedBuilder()
+                .setTitle('Game Servers | ADD')
+                .setTimestamp()
+                .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
+
 			// connect to database
 			mysqlConnection.connect();
 
@@ -101,19 +107,50 @@ module.exports = {
 				// check if server already exists
 				const serverExists = gameServers.some(gameServer => gameServer.serverName === serverName);
 				if (serverExists) {
-					return interaction.reply(`The server ${serverName} already exists.`);
+                    // add embed fields for error message
+                    embed.addField('Error', `The server ${serverName} already exists.`);
+                    embed.addField('Action', 'Please use /server remove to remove the server, then use /server add to add the server again.');
+
+                    // set color to red
+                    embed.setColor(0xFF0000);
+
+                    // send embed
+                    return interaction.reply({ embeds: [embed] });
+
+                    // close database connection
+                    mysqlConnection.end();
 				}
 
 				// Check to see if there are less than 10 servers in the database from the same user
 				const userServers = gameServers.filter(gameServer => gameServer.userID === userID);
 				if (userServers.length >= 10) {
-					return interaction.reply(`You have reached the limit of 10 servers.  Use /server remove to remove a server.`);
+                    // add embed fields for error message
+                    embed.addField('Error', 'You have reached the maximum amount of servers you can add.');
+                    embed.addField('Action', 'Please use /server remove to remove a server, then use /server add to add the server again.');
+
+                    // set color to red
+                    embed.setColor(0xFF0000);
+
+                    // send embed
+                    return interaction.reply({ embeds: [embed] });
+
+                    // close database connection
+                    mysqlConnection.end();
 				}
 
 				// insert request into database (schema: serverGame, serverName, serverIP, serverPort, serverPassword, userID)
 				mysqlConnection.query(`INSERT INTO gameServers (serverGame, serverName, serverIP, serverPort, serverPassword, createdBy) VALUES ('${game}', '${serverName}', '${ip}', '${port}', '${password}', '${userID}')`, function (error, results, fields) {
                     if (error) throw error;
-					interaction.reply(`The server ${serverName} has been added.`);
+
+                    // add embed fields for success message
+                    embed.addField('Success', `The server ${serverName} has been added.`);
+                    embed.addField('Action', 'Use /server list to view all servers.');
+
+                    // set color to green
+                    embed.setColor(0x00FF00);
+
+                    // send embed
+                    interaction.reply({ embeds: [embed] });
 				});
 
                 // close database connection
@@ -123,6 +160,12 @@ module.exports = {
 
 		// If the slash command is /server and subcommand is remove, execute this code
 		if (interaction.commandName === 'gameserver' && interaction.options.getSubcommand() === 'remove') {
+            // create master embed for all messages
+            const embed = new EmbedBuilder()
+                .setTitle('Game Servers | REMOVE')
+                .setTimestamp()
+                .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
+
 			// connect to database
 			mysqlConnection.connect();
 
@@ -136,18 +179,43 @@ module.exports = {
 
 				// check if server exists
 				if (gameServers.length === 0) {
-					return interaction.reply(`The server ${interaction.options.getString('server')} does not exist.`);
+                    // add embed fields for error message
+                    embed.addField('Error', `The server ${interaction.options.getString('server')} does not exist.`);
+                    embed.addField('Action', 'Please use /server add to add the server or /list to view all servers.');
+
+                    // set color to red
+                    embed.setColor(0xFF0000);
+
+                    // send embed
+                    return interaction.reply({ embeds: [embed] });
 				}
 
 				// check if user is the one who added the server or is noahs userID (noahs userID is 215624149597421568)
 				if (gameServers[0].userID !== userID && userID !== '215624149597421568') {
-					return interaction.reply(`You are not the one who added the server ${interaction.options.getString('server')}.`);
+                    // add embed fields for error message
+                    embed.addField('Error', `You are not the one who added the server ${interaction.options.getString('server')}.`);
+                    embed.addField('Action', 'Please use /server add to add the server or /list to view all servers.');
+
+                    // set color to red
+                    embed.setColor(0xFF0000);
+
+                    // send embed
+                    return interaction.reply({ embeds: [embed] });
 				}
 
 				// delete server from database
 				mysqlConnection.query(`DELETE FROM gameServers WHERE serverName = '${interaction.options.getString('server')}'`, function (error, results, fields) {
 					if (error) throw error;
-					interaction.reply(`The server ${interaction.options.getString('server')} has been removed.`);
+
+                    // add embed fields for success message
+                    embed.addField('Success', `The server ${interaction.options.getString('server')} has been removed.`);
+                    embed.addField('Action', 'Use /server list to view all servers.');
+
+                    // set color to green
+                    embed.setColor(0x00FF00);
+
+                    // send embed
+                    return interaction.reply({ embeds: [embed] });
 				});
 
                 // close database connection
