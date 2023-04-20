@@ -74,6 +74,9 @@ module.exports = {
 					embed.addFields({ name: gameServer.serverName, value: `Game: ${gameServer.serverGame}\nIP: ${gameServer.serverIP}\nPort: ${gameServer.serverPort}\nPassword: ${gameServer.serverPassword}\nAdded by: <@${gameServer.userID}>` });
 				});
 
+                // add extra spacing
+                embed.addFields({ name: '\u200B', value: '\u200B' });
+
 				// send embed
 				interaction.reply({ embeds: [embed] });
 			});
@@ -117,8 +120,8 @@ module.exports = {
 				const serverExists = gameServers.some(gameServer => gameServer.serverName === serverName);
 				if (serverExists) {
                     // add embed fields for error message
-                    embed.addFields('Error', `The server ${serverName} already exists.`);
-                    embed.addFields('Action', 'Please use /server remove to remove the server, then use /server add to add the server again.');
+                    embed.addFields({ name: 'Error', value: `The server ${serverName} already exists.` });
+                    embed.addFields({ name: 'Action', value: 'Please use /server remove to remove the server, then use /server add to add the server again.' });
 
                     // set color to red
                     embed.setColor(0xFF0000);
@@ -134,8 +137,8 @@ module.exports = {
 				const userServers = gameServers.filter(gameServer => gameServer.userID === userID);
 				if (userServers.length >= 10) {
                     // add embed fields for error message
-                    embed.addFields('Error', 'You have reached the maximum amount of servers you can add.');
-                    embed.addFields('Action', 'Please use /server remove to remove a server, then use /server add to add the server again.');
+                    embed.addFields({ name: 'Error', value: 'You have reached the maximum amount of servers you can add.' });
+                    embed.addFields({ name: 'Action', value: 'Please use /server remove to remove a server, then use /server add to add the server again.' });
 
                     // set color to red
                     embed.setColor(0xFF0000);
@@ -152,8 +155,8 @@ module.exports = {
                     if (error) throw error;
 
                     // add embed fields for success message
-                    embed.addFields('Success', `The server ${serverName} has been added.`);
-                    embed.addFields('Action', 'Use /server list to view all servers.');
+                    embed.addFields({ name:'Success', value: `The server ${serverName} has been added.` });
+                    embed.addFields({ name:'Action', value: 'Use /server list to view all servers.' });
 
                     // set color to green
                     embed.setColor(0x00FF00);
@@ -189,8 +192,8 @@ module.exports = {
 				// check if server exists
 				if (gameServers.length === 0) {
                     // add embed fields for error message
-                    embed.addFields('Error', `The server ${interaction.options.getString('server')} does not exist.`);
-                    embed.addFields('Action', 'Please use /server add to add the server or /list to view all servers.');
+                    embed.addFields({ name: 'Error', value: `The server ${interaction.options.getString('server')} does not exist.` });
+                    embed.addFields({ name: 'Action', value: 'Please use /server add to add the server or /list to view all servers.' });
 
                     // set color to red
                     embed.setColor(0xFF0000);
@@ -202,8 +205,8 @@ module.exports = {
 				// check if user is the one who added the server or is noahs userID (noahs userID is 215624149597421568)
 				if (gameServers[0].userID !== userID && userID !== '215624149597421568') {
                     // add embed fields for error message
-                    embed.addFields('Error', `You are not the one who added the server ${interaction.options.getString('server')}.`);
-                    embed.addFields('Action', 'Please use /server add to add the server or /list to view all servers.');
+                    embed.addFields({ name:'Error', value: `You are not the one who added the server ${interaction.options.getString('server')}.` });
+                    embed.addFields({ name:'Action', value: 'Please use /server add to add the server or /list to view all servers.' });
 
                     // set color to red
                     embed.setColor(0xFF0000);
@@ -217,8 +220,8 @@ module.exports = {
 					if (error) throw error;
 
                     // add embed fields for success message
-                    embed.addFields('Success', `The server ${interaction.options.getString('server')} has been removed.`);
-                    embed.addFields('Action', 'Use /server list to view all servers.');
+                    embed.addFields({ name:'Success', value: `The server ${interaction.options.getString('server')} has been removed.` });
+                    embed.addFields({ name:'Action', value: 'Use /server list to view all servers.' });
 
                     // set color to green
                     embed.setColor(0x00FF00);
