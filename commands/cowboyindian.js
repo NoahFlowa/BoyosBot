@@ -112,7 +112,7 @@ module.exports = {
                 });
 
                 // Update the amount of points for the Cowboys, set the last user to the user who is executing the command
-                var sql = "UPDATE cowboyindian SET teamPoints = " + newPoints + ", teamLastUser = '" + currentUser + "' WHERE teamName = 'cowboys'";
+                var sql = "UPDATE cowboyindian SET teamPoints = " + parseInt(newPoints) + ", teamLastUser = '" + currentUser + "' WHERE teamName = 'cowboys'";
                 mysqlConnection.query(sql, function (err, result) {
                     if (err) {
                         mysqlConnection.end();
@@ -218,7 +218,7 @@ module.exports = {
                 });
 
                 // Update the amount of points for the Cowboys, set the last user to the user who is executing the command
-                var sql = "UPDATE cowboyindian SET teamPoints = " + newPoints + ", teamLastUser = '" + currentUser + "' WHERE teamName = 'indians'";
+                var sql = "UPDATE cowboyindian SET teamPoints = " + parseInt(newPoints) + ", teamLastUser = '" + currentUser + "' WHERE teamName = 'indians'";
                 mysqlConnection.query(sql, function (err, result) {
                     if (err) {
                         mysqlConnection.end();
