@@ -117,12 +117,14 @@ module.exports = {
                         .setTimestamp()
                         .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
         
-                    for (const request of results) {
-                        featuresListEmbed.addFields(
-                            { name: request.request, value: request.createdAt.toISOString(), inline: true },
-                            { name: '\u200B', value: '\u200B' },
-                        );
-                    }
+                        for (const request of results) {
+                            const localDate = new Date(request.createdAt);
+                            const localDateString = localDate.toLocaleString('en-US', { timeZone: 'America/Detroit' });
+                            featuresListEmbed.addFields(
+                                { name: request.request, value: localDateString, inline: true },
+                                { name: '\u200B', value: '\u200B' },
+                            );
+                        }
         
                     return interaction.reply({ embeds: [featuresListEmbed] });
                 });
