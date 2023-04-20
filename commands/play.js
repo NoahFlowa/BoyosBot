@@ -1,7 +1,7 @@
 // Require the necessary discord.js classes
 const { SlashCommandBuilder } = require("discord.js");
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
-const { validate, getInfo, search } = require('play-dl');
+const { validate, video_info, search } = require('play-dl');
 const { Queue, queueMap } = require('../classes/queueManager');
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
                 // Check if the input is a Spotify URL
                 if (validate(input, 'spotify')) {
                     // Get Spotify track information
-                    const spotifyTrackInfo = await getInfo(input);
+                    const spotifyTrackInfo = await video_info(input);
 
                     // Search for the track on YouTube
                     const trackName = `${spotifyTrackInfo.name} ${spotifyTrackInfo.artists[0].name}`;
