@@ -47,7 +47,7 @@ async function execute(interaction) {
 
   // Check if the user exists in the database and has permission to use the command
   mysqlConnection.query(
-    `SELECT * FROM users WHERE userID = '${interaction.user.id}' AND permissions = 1`,
+    `SELECT * FROM Users WHERE discordUserID = '${interaction.user.id}' AND permissions = 1`,
     async function (error, results) {
       if (error) {
         mysqlConnection.end();
