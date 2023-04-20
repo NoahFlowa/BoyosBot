@@ -74,9 +74,16 @@ module.exports = {
                 .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
 
 				// add fields
-				gameServers.forEach(gameServer => {
-					embed.addFields({ name: gameServer.serverName, value: `Game: ${gameServer.serverGame}\nIP: ${gameServer.serverIP}\nPort: ${gameServer.serverPort}\nPassword: ${gameServer.serverPassword}\nAdded by: <@${gameServer.userID}>` });
-				});
+                gameServers.forEach(gameServer => {
+                    const user = client.users.cache.get(gameServer.userID);
+                    const mention = user ? `<@${user.id}>` : 'Unknown User';
+
+                    embed.addFields({
+                        name: gameServer.serverName,
+                        value: `Game: ${gameServer.serverGame}\nIP: ${gameServer.serverIP}\nPort: ${gameServer.serverPort}\nPassword: ${gameServer.serverPassword}\nAdded by: ${mention}`
+                    });
+                });
+
 
                 // add extra spacing
                 embed.addFields({ name: '\u200B', value: '\u200B' });
