@@ -48,7 +48,7 @@ module.exports = {
 		// If the slash command is /gameserver and subcommand is list, execute this code
 		if (interaction.commandName === 'gameserver' && interaction.options.getSubcommand() === 'list') {
             // create new connection 
-            connectToDatabase();
+            const mysqlConnection = connectToDatabase();
             
 			// connect to database
 			mysqlConnection.connect();
@@ -105,7 +105,7 @@ module.exports = {
                 .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
 
             // create new connection 
-            connectToDatabase();
+            const mysqlConnection = connectToDatabase();
 
 			// connect to database
 			mysqlConnection.connect();
@@ -198,7 +198,7 @@ module.exports = {
                 .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
 
             // create new connection 
-            connectToDatabase();
+            const mysqlConnection = connectToDatabase();
             
 			// connect to database
 			mysqlConnection.connect();
