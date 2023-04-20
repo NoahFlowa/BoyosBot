@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 
-
 // Import mysql connection
 const mysql = require("mysql");
 const { hostName, port, userName, password, databaseName } = require('../config.json');
