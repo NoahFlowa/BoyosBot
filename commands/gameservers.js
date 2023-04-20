@@ -55,10 +55,19 @@ module.exports = {
 				const embed = new EmbedBuilder()
 
 				// add title
-				.setTitle('Game Servers')
+				.setTitle('Game Servers from The Boyos')
 
 				// add description
 				.setDescription('List of game servers ran by The Boyos')
+
+                // add color
+                .setColor(0x22c2fc)
+
+                // add timestamp
+                .setTimestamp()
+
+                // add footer
+                .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
 
 				// add fields
 				gameServers.forEach(gameServer => {
