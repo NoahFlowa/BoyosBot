@@ -39,6 +39,36 @@ module.exports = {
             // Connect to database
             var mysqlConnection = connectToDatabase();
             mysqlConnection.connect();
+            
+            // Check the activeCommands table and see if this command is active to run
+            var sql = "SELECT * FROM activeCommands WHERE commandName = 'cowboyindian'";
+            mysqlConnection.query(sql, function (err, result) {
+                if (err) {
+                    mysqlConnection.end();
+                    throw err;
+                }
+
+                // store the results in a variable
+                var commandData = result;
+                console.log(commandData);
+
+                // If the command is not active 0, return
+                if (commandData.active == 0) {
+                    // Create embed
+                    const embed = new EmbedBuilder()
+                    .setTitle('Cowboy or Indian?')
+                    .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
+
+                    // add the error to an embed
+                    embed.addFields({ name: 'Error', value: 'This command is not active!  This command will active in November!'});
+                    // set the color to red
+                    embed.setColor(0xff0000);
+
+                    // send the embed
+                    interaction.reply({ embeds: [embed], ephemeral: true });
+                }
+
+            });
 
             // Get the current amount of points for the Cowboys
             var sql = "SELECT * FROM cowboyindian WHERE teamName = 'cowboys'";
@@ -150,6 +180,36 @@ module.exports = {
             // Connect to database
             var mysqlConnection = connectToDatabase();
             mysqlConnection.connect();
+
+            // Check the activeCommands table and see if this command is active to run
+            var sql = "SELECT * FROM activeCommands WHERE commandName = 'cowboyindian'";
+            mysqlConnection.query(sql, function (err, result) {
+                if (err) {
+                    mysqlConnection.end();
+                    throw err;
+                }
+
+                // store the results in a variable
+                var commandData = result;
+                console.log(commandData);
+
+                // If the command is not active 0, return
+                if (commandData.active == 0) {
+                    // Create embed
+                    const embed = new EmbedBuilder()
+                    .setTitle('Cowboy or Indian?')
+                    .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
+
+                    // add the error to an embed
+                    embed.addFields({ name: 'Error', value: 'This command is not active!  This command will active in November!'});
+                    // set the color to red
+                    embed.setColor(0xff0000);
+
+                    // send the embed
+                    interaction.reply({ embeds: [embed], ephemeral: true });
+                }
+
+            });
 
             // Get the current amount of points for the Indians
             var sql = "SELECT * FROM cowboyindian WHERE teamName = 'indians'";

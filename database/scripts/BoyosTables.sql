@@ -86,6 +86,17 @@ CREATE TABLE IF NOT EXISTS sys.cowboyindian (
     PRIMARY KEY (teamID)
 );
 
+DROP TABLE sys.activeCommands;
+
+CREATE TABLE IF NOT EXISTS sys.activeCommands (
+    commandID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    commandName VARCHAR(255) NOT NULL,
+    commandDescription VARCHAR(255) NOT NULL,
+    commandLocation VARCHAR(255) NOT NULL,
+    commandEnabled BOOLEAN NOT NULL,
+    PRIMARY KEY (commandID)
+);
+
 
 SELECT *
 FROM sys.featureRequests
@@ -118,3 +129,12 @@ VALUES('NoahFlowa', '@NoahFlowa', '215624149597421568', 1);
 
 INSERT INTO sys.cowboyindian (teamName, teamPoints, teamLastUser)
 VALUES ('indians', 0, '0');
+
+UPDATE sys.cowboyindian
+SET teamPoints = 0
+
+INSERT INTO sys.activeCommands (commandName, commandDescription, commandLocation, commandEnabled)
+VALUES ('cowboyindian', 'Cowboy Indian War', '../commands/cowboyindian.js', 0);
+
+SELECT *
+FROM sys.activeCommands
