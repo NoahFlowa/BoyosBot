@@ -43,7 +43,10 @@ module.exports = {
                     }
     
                     // Get the first video from the search results
-                    video = videos.videos[0];
+                    const firstVideo = videos.videos[0];
+
+                    // Get video information using ytdl.getInfo()
+                    video = await ytdl.getInfo(firstVideo.url);
                 }
     
                 // Get the voice channel of the user who requested the command
@@ -80,11 +83,11 @@ module.exports = {
                     // If no queue, play the song immediately
                     queue.add(video);
                     queue.play();
-                    await interaction.editReply(`Now playing: ${video.title} (${video.url})`);
+                    await interaction.editReply(`Now playing: ${video.videoDetails.title} (${video.videoDetails.video_url})`);
                 } else {
                     // If there is a queue, add the song to the end of the queue
                     queue.add(video);
-                    await interaction.editReply(`Added to the queue: ${video.title} (${video.url})`);
+                    await interaction.editReply(`Added to the queue: ${video.videoDetails.title} (${video.videoDetails.video_url})`);
                 }
             } catch (error) {
                 // If there is an error, reply with an error message and return
@@ -92,5 +95,5 @@ module.exports = {
                 await interaction.editReply('There was a problem searching for the video. Please try again later.');
             }
         }
-    },        
+    },
 };
