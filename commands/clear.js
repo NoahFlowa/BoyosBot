@@ -1,6 +1,5 @@
 // Import the required libraries
-const { SlashCommandBuilder, MessageEmbed } = require("@discordjs/builders");
-const { CommandInteraction } = require("discord.js");
+const { CommandInteraction, SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 // Import mysql connection
 const mysql = require("mysql");
@@ -52,7 +51,7 @@ async function execute(interaction) {
       if (error) {
         mysqlConnection.end();
         console.error(error);
-        const errorEmbed = new MessageEmbed()
+        const errorEmbed = new EmbedBuilder()
           .setTitle("Error")
           .setColor(0xff0000)
           .setDescription("An error occurred while checking your permissions.");
@@ -61,7 +60,7 @@ async function execute(interaction) {
 
       if (results.length === 0) {
         // User does not exist or does not have permission
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
           .setTitle("Clear command")
           .setColor(0xff0000)
           .setDescription("You do not have permission to use this command.");
@@ -77,7 +76,7 @@ async function execute(interaction) {
       // Check if the amount is valid (between 1 and 50)
       if (amount < 1 || amount > 50) {
         mysqlConnection.end();
-        const amountErrorEmbed = new MessageEmbed()
+        const amountErrorEmbed = new EmbedBuilder()
           .setTitle("Invalid Amount")
           .setColor(0xff0000)
           .setDescription("The amount must be between 1 and 50.");
@@ -90,7 +89,7 @@ async function execute(interaction) {
       // Delete the specified number of messages (+1 to include the command message)
     try {
         await interaction.channel.bulkDelete(amount + 1, true);
-        const replyEmbed = new MessageEmbed()
+        const replyEmbed = new EmbedBuilder()
           .setTitle("Success")
           .setColor(0x00ff00)
           .setDescription(`Deleted ${amount} messages.`);
@@ -106,7 +105,7 @@ async function execute(interaction) {
         }, 3000);
       } catch (error) {
         console.error(error);
-        const deletionErrorEmbed = new MessageEmbed()
+        const deletionErrorEmbed = new EmbedBuilder()
           .setTitle("Error")
           .setColor(0xff0000)
           .setDescription("An error occurred while trying to delete messages.");
