@@ -241,13 +241,13 @@ module.exports = {
                     // set color to green
                     embed.setColor(0x00FF00);
 
+                    // close database connection
+                    mysqlConnection.end();
+
                     // send embed
                     return interaction.reply({ embeds: [embed] });
 				});
 			});
-
-            // close database connection
-            mysqlConnection.end();
 		}
 	},
 };
