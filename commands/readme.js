@@ -40,7 +40,7 @@ module.exports = {
         let commandsText = '';
 
         commandsArray.forEach((commandObj) => {
-            commandObj.command.forEach((command) => {
+            commandObj.commands.forEach((command) => {
                 commandsText += `${command}\n`;
             });
         });
