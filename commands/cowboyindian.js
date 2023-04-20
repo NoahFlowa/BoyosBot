@@ -241,11 +241,11 @@ module.exports = {
                     .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
                     // Log the new amount of points for the Cowboys
-                    console.log("Cowboys points updated to " + newPoints);
+                    console.log("Indians points updated to " + newPoints);
                     // add the new points to an embed
-                    embed.addFields({ name: 'Cowboys', value: `${newPoints}`});
-                    // set the color to Gold
-                    embed.setColor(0xffd700);
+                    embed.addFields({ name: 'Indians', value: `${newPoints}`});
+                    // set the color to Brown
+                    embed.setColor(0x8b4513);
 
                     // close the connection
                     mysqlConnection.end();
