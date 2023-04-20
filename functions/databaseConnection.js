@@ -1,5 +1,5 @@
 const mysql = require("mysql2");
-const { hostName, port, userName, password, databaseName } = require('./config.json');
+const { hostName, port, userName, password, databaseName } = require('../config.json');
 
 function connectToDatabase() {
     var mysqlConnection = mysql.createConnection({
