@@ -52,6 +52,7 @@ module.exports = {
                     mysqlConnection.end();
                     throw error;
                 }
+
 				const gameServers = results;
 
 				// create embed
@@ -194,6 +195,7 @@ module.exports = {
                     mysqlConnection.end();
                     throw error;
                 }
+
 				const gameServers = results;
 
 				// get userID
