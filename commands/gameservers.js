@@ -47,10 +47,7 @@ module.exports = {
 			mysqlConnection.connect();
 
 			// get all game servers (schema: serverGame, serverName, serverIP, serverPort, serverPassword, userID)
-			mysqlConnection.query('SELECT * FROM gameServers', function (error, results, fields) {
-				// close database connection
-			    mysqlConnection.end();
-                
+			mysqlConnection.query('SELECT * FROM gameServers', function (error, results, fields) {                
                 if (error) throw error;
 				const gameServers = results;
 
@@ -71,6 +68,9 @@ module.exports = {
 				// send embed
 				interaction.reply({ embeds: [embed] });
 			});
+
+            // close database connection
+            mysqlConnection.end();
 		}
 
 		// If the slash command is /server and subcommand is add, execute this code
@@ -112,12 +112,12 @@ module.exports = {
 
 				// insert request into database (schema: serverGame, serverName, serverIP, serverPort, serverPassword, userID)
 				mysqlConnection.query(`INSERT INTO gameServers (serverGame, serverName, serverIP, serverPort, serverPassword, createdBy) VALUES ('${game}', '${serverName}', '${ip}', '${port}', '${password}', '${userID}')`, function (error, results, fields) {
-					// close database connection
-			        mysqlConnection.end();
-
                     if (error) throw error;
 					interaction.reply(`The server ${serverName} has been added.`);
 				});
+
+                // close database connection
+                mysqlConnection.end();
 			});
 		}
 
@@ -146,12 +146,12 @@ module.exports = {
 
 				// delete server from database
 				mysqlConnection.query(`DELETE FROM gameServers WHERE serverName = '${interaction.options.getString('server')}'`, function (error, results, fields) {
-                    // close database connection
-                    mysqlConnection.end();
-
 					if (error) throw error;
 					interaction.reply(`The server ${interaction.options.getString('server')} has been removed.`);
 				});
+
+                // close database connection
+                mysqlConnection.end();
 			});
 		}
 	},
