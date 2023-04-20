@@ -2,24 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 
 // Import mysql connection
 const { connectToDatabase } = require('../functions/databaseConnection.js');
-
-async function getCommandStatus(commandName) {
-    return new Promise((resolve, reject) => {
-        const mysqlConnection = connectToDatabase();
-        mysqlConnection.connect();
-
-        const sql = `SELECT commandEnabled FROM activeCommands WHERE commandName = ?`;
-        mysqlConnection.query(sql, [commandName], (err, result) => {
-            if (err) {
-                mysqlConnection.end();
-                reject(err);
-            } else {
-                mysqlConnection.end();
-                resolve(result.length > 0 ? result[0].commandEnabled : 1);
-            }
-        });
-    });
-}
+const { getCommandStatus } = require('../functions/getCommandStatus.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -69,7 +52,6 @@ module.exports = {
 
                 // store the results in a variable
                 var teamData = result;
-                console.log(teamData);
 
                 // set teamPoints to 0 if it is null or NaN, parseInt to make sure it is a number
                 if (isNaN(parseInt(teamData.teamPoints)) || teamData.teamPoints == null) {
@@ -111,7 +93,6 @@ module.exports = {
 
                     // store the results in a variable
                     var teamData = result;
-                    console.log(teamData);
 
                     // Create embed
                     const embed = new EmbedBuilder()
@@ -148,8 +129,6 @@ module.exports = {
                     .setTitle('Cowboy or Indian?')
                     .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
-                    // Log the new amount of points for the Cowboys
-                    console.log("Cowboys points updated to " + newPoints);
                     // add the new points to an embed
                     embed.addFields({ name: 'Cowboys', value: `${newPoints}`});
                     // set the color to Gold
@@ -180,7 +159,6 @@ module.exports = {
 
                 // store the results in a variable
                 var teamData = result;
-                console.log(teamData);
 
                 // set teamPoints to 0 if it is null or NaN, parseInt to make sure it is a number
                 if (isNaN(parseInt(teamData.teamPoints)) || teamData.teamPoints == null) {
@@ -222,7 +200,6 @@ module.exports = {
 
                     // store the results in a variable
                     var teamData = result;
-                    console.log(teamData);
 
                     // Create embed
                     const embed = new EmbedBuilder()
@@ -259,8 +236,6 @@ module.exports = {
                     .setTitle('Cowboy or Indian?')
                     .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
-                    // Log the new amount of points for the Cowboys
-                    console.log("Indians points updated to " + newPoints);
                     // add the new points to an embed
                     embed.addFields({ name: 'Indians', value: `${newPoints}`});
                     // set the color to Brown
