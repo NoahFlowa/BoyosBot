@@ -65,7 +65,7 @@ module.exports = {
                     embed.setColor(0xff0000);
 
                     // send the embed
-                    interaction.reply({ embeds: [embed], ephemeral: true });
+                    return interaction.reply({ embeds: [embed], ephemeral: true });
                 }
 
             });
@@ -206,7 +206,7 @@ module.exports = {
                     embed.setColor(0xff0000);
 
                     // send the embed
-                    interaction.reply({ embeds: [embed], ephemeral: true });
+                    return interaction.reply({ embeds: [embed], ephemeral: true });
                 }
 
             });
