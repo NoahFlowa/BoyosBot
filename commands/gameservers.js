@@ -88,7 +88,7 @@ module.exports = {
 				const serverName = interaction.options.getString('server');
 				const ip = interaction.options.getString('ip');
 				const port = interaction.options.getString('port');
-				const password = interaction.options.getString('password');
+				var password = interaction.options.getString('password');
 
 				// if password is null, set it to 'none'
 				if (password === null) {
