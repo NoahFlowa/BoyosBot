@@ -40,9 +40,9 @@ module.exports = {
         .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
 
         // loop through the changesArray
-        changesArray.forEach((change) => {
-            change.changes.forEach((change) => {
-                changesEmbed.addFields({ name: 'Added Command', value: `${change.changes}`, inline: true });
+        changesArray.forEach((changeObj) => {
+            changeObj.changes.forEach((change) => {
+                changesEmbed.addFields({ name: 'Added Command', value: change, inline: true });
                 changesEmbed.addFields({ name: '\u200B', value: '\u200B' });
             });
         });

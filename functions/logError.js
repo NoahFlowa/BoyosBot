@@ -9,7 +9,7 @@ async function logError(errorMessage, errorLocation, encounteredBy) {
         const mysqlConnection = connectToDatabase();
         mysqlConnection.connect();
 
-        const sql = `INSERT INTO botErrorLogs (errorMessage, errorLocation, encounteredBy) VALUES (?, ?, ?, ?)`;
+        const sql = `INSERT INTO botErrorLogs (errorMessage, errorLocation, encounteredBy) VALUES (?, ?, ?)`;
         mysqlConnection.query(sql, [errorMessage, errorLocation, encounteredBy], (err, result) => {
             mysqlConnection.end();
 
