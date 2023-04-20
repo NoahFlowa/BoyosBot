@@ -52,13 +52,18 @@ module.exports = {
                 var teamData = result;
                 console.log(teamData);
 
+                // set teamPoints to 0 if it is null or NaN, parseInt to make sure it is a number
+                if (isNaN(parseInt(teamData.teamPoints)) || teamData.teamPoints == null) {
+                    teamData.teamPoints = 0;
+                }
+
                 // Create embed
                 const embed = new EmbedBuilder()
                 .setTitle('Cowboy or Indian?')
                 .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
                 // Get the current amount of points for the Cowboys
-                var currentPoints = teamData.teamPoints;
+                var currentPoints = parseInt(teamData.teamPoints);
                 var newPoints = currentPoints + Math.floor(Math.random() * 10) + 1;
 
                 // Check if the user who last got points is the same as the user who is executing the command
@@ -158,13 +163,18 @@ module.exports = {
                 var teamData = result;
                 console.log(teamData);
 
+                // set teamPoints to 0 if it is null or NaN, parseInt to make sure it is a number
+                if (isNaN(parseInt(teamData.teamPoints)) || teamData.teamPoints == null) {
+                    teamData.teamPoints = 0;
+                }
+
                 // Create embed
                 const embed = new EmbedBuilder()
                 .setTitle('Cowboy or Indian?')
                 .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
                 // Get the current amount of points for the Indians
-                var currentPoints = teamData.teamPoints;
+                var currentPoints = parseInt(teamData.teamPoints);
                 var newPoints = currentPoints + Math.floor(Math.random() * 10) + 1;
 
                 // Check if the user who last got points is the same as the user who is executing the command
