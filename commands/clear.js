@@ -2,7 +2,7 @@
 const { CommandInteraction, SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 // Import mysql connection
-const mysql = require("mysql");
+const mysql = require("mysql2")
 const {
   hostName,
   port,

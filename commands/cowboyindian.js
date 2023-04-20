@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 
 // Import mysql connection
-const mysql = require("mysql");
+const mysql = require("mysql2")
 const { hostName, port, userName, password, databaseName } = require('../config.json');
 
 function connectToDatabase() {
@@ -106,6 +106,10 @@ module.exports = {
                     embed.addFields({ name: 'Cowboys', value: newPoints});
                     // set the color to Gold
                     embed.setColor(0xffd700);
+
+                    // close the connection
+                    mysqlConnection.end();
+                    
                     // send the embed
                     interaction.reply({ embeds: [embed] });
                 });
@@ -179,9 +183,15 @@ module.exports = {
                     embed.addFields({ name: 'Cowboys', value: newPoints});
                     // set the color to Gold
                     embed.setColor(0xffd700);
+
+                    // close the connection
+                    mysqlConnection.end();
+
                     // send the embed
                     interaction.reply({ embeds: [embed] });
                 });
+
+                
             });
         }
     },
