@@ -44,8 +44,6 @@ module.exports = {
     
                     // Get the first video from the search results
                     const firstVideo = videos.videos[0];
-
-                    // Get video information using ytdl.getInfo()
                     video = await ytdl.getInfo(firstVideo.url);
                 }
     
