@@ -1,5 +1,5 @@
 // Require the necessary discord.js classes
-const { SlashCommandBuilder, MessageEmbed } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 
 // Import mysql connection
 const mysql = require("mysql");
@@ -16,7 +16,7 @@ var mysqlConnection = mysql.createConnection({
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('feature')
-        .setDescription('Request or list requested features for the bot.')
+        .setDescription('Request a new feature for the bot')
         .addSubcommand(subcommand =>
             subcommand
                 .setName('request')
@@ -89,17 +89,8 @@ module.exports = {
                     if (requestCount === 0) {
                         return interaction.reply(`There are no feature requests.`);
                     }
-
-                    // Create the embed object
-                    const embed = new MessageEmbed()
-                        .setTitle(`Feature Requests From ${interaction.user.username}`)
-                        .setColor('#22c2fc');
-                    
                     const requestList = results.map(request => `**${request.request}**: ${request.createdAt}`).join('\n');
-                    embed.setDescription(requestList);
-
-                    // Send the embed
-                    return interaction.reply({ embeds: [embed] });
+                    return interaction.reply(`There are ${requestCount} feature requests from you:\n${requestList}`);
                 });
 
                 // disconnect from database
