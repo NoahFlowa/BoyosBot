@@ -75,6 +75,17 @@ CREATE TABLE IF NOT EXISTS sys.Users (
     FOREIGN KEY (permissionID) REFERENCES Permissions(permissionID)
 );
 
+DROP TABLE sys.cowboyindian;
+
+CREATE TABLE IF NOT EXISTS sys.cowboyindian (
+    teamID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    teamName VARCHAR(255) NOT NULL,
+    teamPoints INT NOT NULL,
+    teamLastUser VARCHAR(255) NOT NULL,
+    teamLastUserDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (teamID)
+);
+
 
 SELECT *
 FROM sys.featureRequests
