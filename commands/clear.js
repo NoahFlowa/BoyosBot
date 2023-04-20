@@ -95,8 +95,7 @@ async function execute(interaction) {
           .setDescription(`Deleted ${amount} messages.`);
 
         const reply = await interaction.reply({
-          embeds: [replyEmbed],
-          ephemeral: true,
+          embeds: [replyEmbed]
         });
 
       } catch (error) {
