@@ -22,12 +22,16 @@ module.exports = {
 		.setDescription('Provides information about the user.'),
 	async execute(interaction) {
 
+		const avatarURL = interaction.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 });
+
 		// Create the embed
 		const embed = new EmbedBuilder()
 			.setTitle('User Information')
 			.setColor(0x22c2fc)
 			.setDescription(`This command was run by ${interaction.user.username}, who joined on ${interaction.member.joinedAt}.`)
 			.setTimestamp()
+			.setThumbnail(avatarURL)
+			.setImage(avatarURL)
 			.setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
 
 		// Connect to the database
@@ -48,12 +52,10 @@ module.exports = {
 			// If the user exists in the database, send over their user information with .addFields()
 			// Users table schema: name, discordDisplayName, discordUserID, permissionID
 			if (results.length > 0) {
-				embed.addFields(
-					{ name: 'Name', value: results[0].name, inline: true },
-					{ name: 'Discord Display Name', value: results[0].discordDisplayName, inline: true },
-					{ name: 'Discord User ID', value: results[0].discordUserID, inline: true },
-					{ name: 'Permission Level', value: results[0].permissionID, inline: true }
-				);
+				embed.addFields({ name: 'Name', value: results[0].name, inline: true });
+				embed.addFields({ name: 'Discord Display Name', value: results[0].discordDisplayName, inline: true });
+				embed.addFields({ name: 'Discord User ID', value: results[0].discordUserID, inline: true });
+				embed.addFields({ name: 'Permission Level', value: results[0].permissionID, inline: true });
 			}
 
 			// Close the database connection
