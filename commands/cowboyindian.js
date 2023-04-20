@@ -37,7 +37,7 @@ module.exports = {
         // Create embed
         const embed = new EmbedBuilder()
             .setTitle('Cowboy or Indian?')
-            .setDescription('Cowboys: ' + result[0].points + '\nIndians: ' + result[1].points);
+            .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
         // If the slash command is /cowboyindian and subcommand is cowboy, execute this code
         if (interaction.commandName === 'cowboyindian' && interaction.options.getSubcommand() === 'cowboy') {
