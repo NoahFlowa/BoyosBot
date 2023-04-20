@@ -3,6 +3,18 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
+// * Require the mysql
+const mysql = require("mysql");
+const { hostName, port, userName, password, databaseName } = require('../config.json');
+
+var mysqlConnection = mysql.createConnection({
+    host: hostName,
+    port: port,
+    user: userName,
+    password: password,
+    database: databaseName
+});
+
 // * Require ENV variables
 const { discordToken } = require('./config.json');
 
@@ -36,12 +48,39 @@ for (const file of eventFiles) {
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
-    // Set a new item in the Collection with the key as the command name and the value as the exported module
-	if ('data' in command && 'execute' in command) {
-		client.commands.set(command.data.name, command);
-	} else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-	}
+
+    if ('data' in command && 'execute' in command) {
+        // Wrap command execution code in a try-catch block
+        client.commands.set(command.data.name, async (...args) => {
+            try {
+                await command.execute(...args);
+            } catch (error) {
+                console.error(`Error executing command ${command.data.name}:`, error);
+                try {
+                    // Add the error to the botErrorLogs table in the database
+                    mysqlConnection.connect();
+
+                    const userID = args[0].user.id;
+                    const cleansedError = error.toString().replace(/'/g, "''");
+
+                    // botErrorLogs table schema: (errorMessage, errorLocation, encounteredBy)
+                    mysqlConnection.query(`INSERT INTO botErrorLogs (errorMessage, errorLocation, encounteredBy) VALUES ('${cleansedError}', '${filePath}', '${userID}')`, function (error, results, fields) {
+                        if (error) throw error;
+                    });
+
+                    // close the connection to the database
+                    mysqlConnection.end();
+
+                    // Send an error message to the user
+                    await args[0].reply(`There was an error while executing that command. The error has been logged and will be reviewed by the bot developer.`);
+                } catch (error) {
+                    console.error(`Error sending error message to user:`, error);
+                }
+            }
+        });
+    } else {
+        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+    }
 }
 
 // * Log in to Discord with your client's token
