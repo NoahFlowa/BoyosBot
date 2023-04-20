@@ -40,7 +40,7 @@ module.exports = {
                 .setTitle("Test")
                 .setDescription("Test command");
 
-            users.ForEach(user => {
+            users.forEach(user => {
                 embed.addFields({ name: 'Value', value: user.value});
             });
 
