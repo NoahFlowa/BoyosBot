@@ -41,13 +41,13 @@ module.exports = {
 
         commandsArray.forEach((commandObj) => {
             commandObj.commands.forEach((command) => {
-                commandsText += `${command}\n`;
+                commandsText += `${command}\n\n`;
             });
         });
 
         readmeEmbed.addFields(
             { name: 'Commands available for the bot', value: '\u200B' },
-            { name: 'Command Name: ', value: commandsText },
+            { name: 'Command Names: ', value: commandsText },
         );
 
         await interaction.reply({ embeds: [readmeEmbed] });
