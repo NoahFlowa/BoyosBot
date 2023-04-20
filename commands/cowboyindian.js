@@ -34,11 +34,6 @@ module.exports = {
         // If the interaction is not a slash command, return
         if (!interaction.isCommand()) return;
 
-        // Create embed
-        const embed = new EmbedBuilder()
-            .setTitle('Cowboy or Indian?')
-            .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
-
         // If the slash command is /cowboyindian and subcommand is cowboy, execute this code
         if (interaction.commandName === 'cowboyindian' && interaction.options.getSubcommand() === 'cowboy') {
             // Connect to database
@@ -52,6 +47,13 @@ module.exports = {
                     mysqlConnection.end();
                     throw err;
                 }
+
+                // Create embed
+                const embed = new EmbedBuilder()
+                .setTitle('Cowboy or Indian?')
+                .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
+
+                // Get the current amount of points for the Cowboys
                 var currentPoints = result[0].teamPoints;
                 var newPoints = currentPoints + Math.floor(Math.random() * 10) + 1;
 
@@ -78,6 +80,13 @@ module.exports = {
                         mysqlConnection.end();
                         throw err;
                     }
+
+                    // Create embed
+                    const embed = new EmbedBuilder()
+                    .setTitle('Cowboy or Indian?')
+                    .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
+
+                    // Get the current amount of points for the Cowboys
                     var lastUser = result[0].teamLastUser;
                     var currentUser = interaction.user.id;
 
@@ -101,6 +110,12 @@ module.exports = {
                         mysqlConnection.end();
                         throw err;
                     }
+                    // Create embed
+                    const embed = new EmbedBuilder()
+                    .setTitle('Cowboy or Indian?')
+                    .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
+
+                    // Log the new amount of points for the Cowboys
                     console.log("Cowboys points updated to " + newPoints);
                     // add the new points to an embed
                     embed.addFields({ name: 'Cowboys', value: newPoints});
@@ -129,6 +144,13 @@ module.exports = {
                     mysqlConnection.end();
                     throw err;
                 }
+
+                // Create embed
+                const embed = new EmbedBuilder()
+                .setTitle('Cowboy or Indian?')
+                .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
+
+                // Get the current amount of points for the Indians
                 var currentPoints = result[0].teamPoints;
                 var newPoints = currentPoints + Math.floor(Math.random() * 10) + 1;
 
@@ -155,6 +177,13 @@ module.exports = {
                         mysqlConnection.end();
                         throw err;
                     }
+
+                    // Create embed
+                    const embed = new EmbedBuilder()
+                    .setTitle('Cowboy or Indian?')
+                    .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
+
+                    // Get the current amount of points for the Cowboys
                     var lastUser = result[0].teamLastUser;
                     var currentUser = interaction.user.id;
 
@@ -178,6 +207,13 @@ module.exports = {
                         mysqlConnection.end();
                         throw err;
                     }
+
+                    // Create embed
+                    const embed = new EmbedBuilder()
+                    .setTitle('Cowboy or Indian?')
+                    .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
+
+                    // Log the new amount of points for the Cowboys
                     console.log("Cowboys points updated to " + newPoints);
                     // add the new points to an embed
                     embed.addFields({ name: 'Cowboys', value: newPoints});

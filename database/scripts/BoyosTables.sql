@@ -106,9 +106,15 @@ SELECT *
 FROM sys.Users u
 INNER JOIN sys.Permissions p ON p.permissionID = u.permissionID
 
+SELECT *
+FROM sys.cowboyindian
+
 
 INSERT INTO sys.Permissions (permissionLabel, permissionDescription, permissionColor)
 VALUES ('Admin', 'This permission is reserved for NoahFlowa', '0x22c2fc');
 
 INSERT INTO sys.Users (name, discordUserName, discordUserID, permissionID)
 VALUES('NoahFlowa', '@NoahFlowa', '215624149597421568', 1);
+
+INSERT INTO sys.cowboyindian (teamName, teamPoints, teamLastUser)
+VALUES ('indians', 0, '0');
