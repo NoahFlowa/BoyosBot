@@ -1,7 +1,7 @@
 // Require the necessary discord.js classes
 const { SlashCommandBuilder } = require("discord.js");
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
-const { search, stream, video_info, validate, getInfo } = require('play-dl');
+const { validate, getInfo, search } = require('play-dl');
 const { Queue, queueMap } = require('../classes/queueManager');
 
 module.exports = {
