@@ -1,20 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
+const { EmbedBuilder } = require('@discordjs/builders');
 
-// Import mysql connection
-const mysql = require("mysql2")
-const { hostName, port, userName, password, databaseName } = require('../config.json');
-
-function connectToDatabase() {
-    var mysqlConnection = mysql.createConnection({
-        host: hostName,
-        port: port,
-        user: userName,
-        password: password,
-        database: databaseName
-    });
-
-    return mysqlConnection;
-}
+// Import logError function
+const { logError } = require('../functions/logError.js');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -46,25 +33,8 @@ module.exports = {
 			// Get file name which is in the commands directory and the file name is the same as the command name
 			const fileName = `commands/${commandName}.js`;
 
-			// Get the cleansed error message
-			const cleansedErrorMessage = `No command matching ${interaction.commandName} was found.`.replace(/'/g, "''");
-
-			// connect to database
-			var mysqlConnection = connectToDatabase();
-
-			// connect to database
-			mysqlConnection.connect();
-
-			// insert error into database.  schema is: errorMessage, errorLocation, encounteredBy
-			mysqlConnection.query(`INSERT INTO botErrorLogs (errorMessage, errorLocation, encounteredBy) VALUES ('${cleansedErrorMessage}', '${fileName}', '${userID}')`, function (error, results, fields) {
-				if (error) {
-					mysqlConnection.end();
-					throw error;
-				}
-			});
-
-			// disconnect from database
-			mysqlConnection.end();
+			// Log the error via the logError function
+			logError(`No command matching ${interaction.commandName} was found.`, fileName, userID);
 
 			// add the error message to the embed
 			embed.addFields({ name: 'Error Message', value: `No command matching ${interaction.commandName} was found.  Error has been logged!` });
@@ -88,25 +58,8 @@ module.exports = {
 			// Get file name which is in the commands directory and the file name is the same as the command name
 			const fileName = `commands/${commandName}.js`;
 
-			// Get the cleansed error message
-			const cleansedErrorMessage = error.message.replace(/'/g, "''");
-
-			// connect to database
-			var mysqlConnection = connectToDatabase();
-
-			// connect to database
-			mysqlConnection.connect();
-
-			// insert error into database.  schema is: errorMessage, errorLocation, encounteredBy
-			mysqlConnection.query(`INSERT INTO botErrorLogs (errorMessage, errorLocation, encounteredBy) VALUES ('${cleansedErrorMessage}', '${fileName}', '${userID}')`, function (error, results, fields) {
-				if (error) {
-					mysqlConnection.end();
-					throw error;
-				}
-			});
-
-			// disconnect from database
-			mysqlConnection.end();
+			// Log the error via the logError function
+			logError(`No command matching ${interaction.commandName} was found.`, fileName, userID);
 
 			// reply to the user that the command failed and the error has been logged using embed
 			embed.addFields({ name: 'Error Message', value: `Error executing ${interaction.commandName}.  Error has been logged!` });
