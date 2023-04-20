@@ -4,23 +4,13 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 // * Require ENV variables
-const mysql = require("mysql");
-const { hostName, port, userName, password, databaseName, discordToken } = require('./config.json');
+const { discordToken } = require('./config.json');
 
 // * Require the deployCommands function
 const { deployCommands } = require('./deploy-commands.js');
 
 // * Create client options to be passed to the client constructor
 const clientOptions = { restRequestTimeout: 60000 }; // 60 seconds
-
-// * Create mysql connection
-var mysqlConnection = mysql.createConnection({
-    host: hostName,
-    port: port,
-    user: userName,
-    password: password,
-    database: databaseName
-});
 
 // * Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.MessageContent] }, clientOptions);
@@ -49,7 +39,7 @@ for (const file of commandFiles) {
     const command = require(filePath);
     // Set a new item in the Collection with the key as the command name and the value as the exported module
 	if ('data' in command && 'execute' in command) {
-		client.commands.set(command.data.name, command);
+            client.commands.set(command.data.name, command);
 	} else {
 		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 	}
