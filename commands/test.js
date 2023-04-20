@@ -33,6 +33,9 @@ module.exports = {
                 embed.addFields({ name: 'Value', value: `${user.userID}`});
             });
 
+            // Close connection
+            mysqlConnection.end();
+
             // Send embed
             interaction.reply({ embeds: [embed] });
         });
