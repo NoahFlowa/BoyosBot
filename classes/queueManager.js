@@ -32,6 +32,7 @@ class Queue {
 
 		this.player.on('error', error => {
 			console.error(`Error: ${error.message}`);
+			console.error(`QueueManager Error: ${error.stack}`);
 			this.songs.shift();
 			this.play();
 		});
