@@ -20,35 +20,22 @@ module.exports = {
             const input = interaction.options.getString('input');
     
             // Defer the reply to the interaction
-            await interaction.reply({ content: 'Processing your request...', ephemeral: false });
+            await interaction.reply({ content: `Searching for ${input}...`});
     
             try {
-                let video;
-    
-                // Check if input is a valid URL
-                if (ytdl.validateURL(input)) {
-                    // Get the video information from the URL
-                    video = await ytdl.getInfo(input);
-                } else {
-                    // Search for youtube videos using yt-search
-                    const videoResult = await ytSearch(input);
 
-                    // If no videos are found, reply with an error message and return
-                    if (!videoResult || !videoResult.videos || !videoResult.videos.length) {
-                        await interaction.editReply('No videos found.');
-                        return;
-                    }
+                // Search for youtube videos using yt-search
+                const videos = await ytSearch(input);
 
-                    // Get the first video from the search results
-                    video = await ytdl.getInfo(videoResult.videos[0].url);
-
-                    // Check if the video is defined
-                    if (!video) {
-                        await interaction.editReply('No videos found.');
-                        return;
-                    }
+                // If no videos are found, reply with an error message and return
+                if (!videos || !videos.videos || !videos.videos.length) {
+                    await interaction.followUp('No videos found.');
+                    return;
                 }
-    
+
+                // Get the first video from the search results
+                const video = videos.videos[0];
+
                 // Get the voice channel of the user who requested the command
                 const channel = interaction.member.voice.channel;
     
