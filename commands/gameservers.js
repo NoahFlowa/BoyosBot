@@ -98,7 +98,11 @@ module.exports = {
 
 			// get all game servers
 			mysqlConnection.query('SELECT * FROM gameServers', function (error, results, fields) {
-				if (error) throw error;
+				if (error) {
+                    mysqlConnection.end();
+                    throw error;
+                }
+                
 				const gameServers = results;
 
 				// get options
@@ -126,11 +130,11 @@ module.exports = {
                     // set color to red
                     embed.setColor(0xFF0000);
 
-                    // send embed
-                    return interaction.reply({ embeds: [embed] });
-
                     // close database connection
                     mysqlConnection.end();
+
+                    // send embed
+                    return interaction.reply({ embeds: [embed] });
 				}
 
 				// Check to see if there are less than 10 servers in the database from the same user
@@ -143,11 +147,11 @@ module.exports = {
                     // set color to red
                     embed.setColor(0xFF0000);
 
-                    // send embed
-                    return interaction.reply({ embeds: [embed] });
-
                     // close database connection
                     mysqlConnection.end();
+
+                    // send embed
+                    return interaction.reply({ embeds: [embed] });
 				}
 
 				// insert request into database (schema: serverGame, serverName, serverIP, serverPort, serverPassword, userID)
