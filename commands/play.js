@@ -23,7 +23,7 @@ module.exports = {
             const input = interaction.options.getString('input');
     
             // Defer the reply to the interaction
-            await interaction.deferReply();
+            interaction.deferReply({ephemeral: false}).catch(error => console.error('Error deferring reply:', error));
     
             try {
                 let video;
