@@ -34,16 +34,16 @@ module.exports = {
                     video = await ytdl.getInfo(input);
                 } else {
                     // Search for youtube videos using yt-search
-                    const videos = await ytSearch(input);
-    
+                    const videoResult = await ytSearch(input);
+
                     // If no videos are found, reply with an error message and return
-                    if (!videos || !videos.videos || !videos.videos.length) {
+                    if (!videoResult || !videoResult.videos || !videoResult.videos.length) {
                         await interaction.editReply('No videos found.');
                         return;
                     }
-    
+
                     // Get the first video from the search results
-                    video = videos.videos[0];
+                    video = await ytdl.getInfo(videoResult.videos[0].url);
 
                     // Check if the video is defined
                     if (!video) {
