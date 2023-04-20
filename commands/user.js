@@ -30,8 +30,8 @@ module.exports = {
 			.setColor(0x22c2fc)
 			.setDescription(`This command was run by ${interaction.user.username}, who joined on ${interaction.member.joinedAt}.`)
 			.setTimestamp()
-			.setThumbnail({ url: avatarURL })
-			.setImage({ url: avatarURL })
+			.setThumbnail(avatarURL)
+			.setImage(avatarURL)
 			.setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
 
 		// Connect to the database
