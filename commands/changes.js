@@ -14,7 +14,6 @@ module.exports = {
         .setThumbnail('https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024')
         .addFields(
             { name: 'If you would like a feature added to the bot, please use the feature request command.', value: '\u200B'},
-            { name: '\u200B', value: '\u200B'},
             { name: 'Changes to the bot', value: '\u200B' },
             { name: 'Added a new command', value: 'Added a new command called changes. This command will tell you about the changes to the bot.', inline: true },
             { name: '\u200B', value: '\u200B' },
