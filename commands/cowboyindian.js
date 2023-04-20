@@ -34,6 +34,10 @@ module.exports = {
         // If the interaction is not a slash command, return
         if (!interaction.isCommand()) return;
 
+        // Connect to database
+        var mysqlConnection = connectToDatabase();
+        mysqlConnection.connect();
+
         // Check the activeCommands table and see if this command is active to run
         var sql = "SELECT * FROM activeCommands WHERE commandName = 'cowboyindian'";
         mysqlConnection.query(sql, function (err, result) {
@@ -47,6 +51,9 @@ module.exports = {
             console.log(commandData);
 
         });
+
+        // close the connection
+        mysqlConnection.end();
 
         // If the command is not active 0, return
         if (commandData.active == 0) {
