@@ -3,10 +3,17 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
-// * Require the mysql
+// * Require ENV variables
 const mysql = require("mysql");
-const { hostName, port, userName, password, databaseName } = require('../config.json');
+const { hostName, port, userName, password, databaseName, discordToken } = require('./config.json');
 
+// * Require the deployCommands function
+const { deployCommands } = require('./deploy-commands.js');
+
+// * Create client options to be passed to the client constructor
+const clientOptions = { restRequestTimeout: 60000 }; // 60 seconds
+
+// * Create mysql connection
 var mysqlConnection = mysql.createConnection({
     host: hostName,
     port: port,
@@ -15,17 +22,9 @@ var mysqlConnection = mysql.createConnection({
     database: databaseName
 });
 
-// * Require ENV variables
-const { discordToken } = require('./config.json');
-
-// * Require the deployCommands function
-const { deployCommands } = require('./deploy-commands.js');
-
-// * Create client options to be passed to the client constructor
-const clientOptions = { restRequestTimeout: 60000 }; // 60 seconds
-
 // * Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.MessageContent] }, clientOptions);
+
 
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
