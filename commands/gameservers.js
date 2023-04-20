@@ -48,7 +48,10 @@ module.exports = {
 
 			// get all game servers (schema: serverGame, serverName, serverIP, serverPort, serverPassword, userID)
 			mysqlConnection.query('SELECT * FROM gameServers', function (error, results, fields) {                
-                if (error) throw error;
+                if (error) {
+                    mysqlConnection.end();
+                    throw error;
+                }
 				const gameServers = results;
 
 				// create embed
@@ -187,7 +190,10 @@ module.exports = {
 
 			// get all game servers from the database matching the server name from the slash command option
 			mysqlConnection.query(`SELECT * FROM gameServers WHERE serverName = '${interaction.options.getString('server')}'`, function (error, results, fields) {
-				if (error) throw error;
+				if (error) {
+                    mysqlConnection.end();
+                    throw error;
+                }
 				const gameServers = results;
 
 				// get userID
@@ -233,10 +239,10 @@ module.exports = {
                     // send embed
                     return interaction.reply({ embeds: [embed] });
 				});
-
-                // close database connection
-                mysqlConnection.end();
 			});
+
+            // close database connection
+            mysqlConnection.end();
 		}
 	},
 };
