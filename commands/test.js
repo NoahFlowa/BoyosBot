@@ -24,6 +24,7 @@ module.exports = {
 
         // Connect to database
         var mysqlConnection = connectToDatabase();
+
         mysqlConnection.connect();
 
         // Query database
@@ -34,6 +35,7 @@ module.exports = {
             }
 
             const users = result;
+            console.log(users);
 
             // Create embed
             const embed = new EmbedBuilder()
@@ -41,7 +43,7 @@ module.exports = {
                 .setDescription("Test command");
 
             users.forEach(user => {
-                embed.addFields({ name: 'Value', value: user.value});
+                embed.addFields({ name: 'Value', value: `${user.value}`});
             });
 
             // Send embed
