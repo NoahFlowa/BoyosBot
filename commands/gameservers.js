@@ -81,12 +81,12 @@ module.exports = {
                 // add extra spacing
                 embed.addFields({ name: '\u200B', value: '\u200B' });
 
+                // close database connection
+                mysqlConnection.end();
+
 				// send embed
 				interaction.reply({ embeds: [embed] });
 			});
-
-            // close database connection
-            mysqlConnection.end();
 		}
 
 		// If the slash command is /server and subcommand is add, execute this code
@@ -169,12 +169,12 @@ module.exports = {
                     // set color to green
                     embed.setColor(0x00FF00);
 
+                    // close database connection
+                    mysqlConnection.end();
+
                     // send embed
                     interaction.reply({ embeds: [embed] });
 				});
-
-                // close database connection
-                mysqlConnection.end();
 			});
 		}
 
