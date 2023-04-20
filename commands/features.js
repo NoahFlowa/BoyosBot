@@ -1,5 +1,5 @@
 // Require the necessary discord.js classes
-const { SlashCommandBuilder, EmbedBuilder, Embed } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 // Import mysql connection
 const mysql = require("mysql");
@@ -90,27 +90,23 @@ module.exports = {
                         return interaction.reply(`There are no feature requests.`);
                     }
         
-                    // Create the embed object
                     const featuresListEmbed = new EmbedBuilder()
                         .setColor(0x22c2fc)
-                        .setTitle('Your Feature Requests for The Boyos Bot')
+                        .setTitle('The Boyos Bot Changes')
                         .setURL('https://NoahOsterhout.com')
                         .setAuthor({ name: '@NoahFlowa & @wymiller', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256', url: 'https://NoahOsterhout.com' })
-                        .setDescription('Here are all of your feature requests for The Boyos Bot')
-                        .setThumbnail('https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024');
+                        .setDescription('The Boyos Bot is a bot created by Noah Osterhout and Wyatt Miller. It is a bot that is used to play music in a voice channel, and to moderate the server. It is a work in progress, and is currently in beta. If you have any questions, please contact Noah Osterhout or Wyatt Miller.')
+                        .setThumbnail('https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024')
+                        .setTimestamp()
+                        .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
         
-                    // Add fields for each feature request
                     for (const request of results) {
                         featuresListEmbed.addFields(
-                            { name: request.request, value: request.createdAt, inline: true },
-                            { name: '\u200B', value: '\u200B' }
+                            { name: request.request, value: request.createdAt.toISOString(), inline: true },
+                            { name: '\u200B', value: '\u200B' },
                         );
                     }
         
-                    featuresListEmbed.setTimestamp()
-                        .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
-        
-                    // Send the embed
                     return interaction.reply({ embeds: [featuresListEmbed] });
                 });
         
