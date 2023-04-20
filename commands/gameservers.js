@@ -111,7 +111,7 @@ module.exports = {
 				}
 
 				// insert request into database (schema: serverGame, serverName, serverIP, serverPort, serverPassword, userID)
-				mysqlConnection.query(`INSERT INTO gameServers (serverGame, serverName, serverIP, serverPort, serverPassword, userID) VALUES ('${game}', '${serverName}', '${ip}', '${port}', '${password}', '${userID}')`, function (error, results, fields) {
+				mysqlConnection.query(`INSERT INTO gameServers (serverGame, serverName, serverIP, serverPort, serverPassword, createdBy) VALUES ('${game}', '${serverName}', '${ip}', '${port}', '${password}', '${userID}')`, function (error, results, fields) {
 					// close database connection
 			        mysqlConnection.end();
 
@@ -148,7 +148,7 @@ module.exports = {
 				mysqlConnection.query(`DELETE FROM gameServers WHERE serverName = '${interaction.options.getString('server')}'`, function (error, results, fields) {
                     // close database connection
                     mysqlConnection.end();
-                    
+
 					if (error) throw error;
 					interaction.reply(`The server ${interaction.options.getString('server')} has been removed.`);
 				});
