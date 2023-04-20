@@ -43,7 +43,7 @@ module.exports = {
                 .setDescription("Test command");
 
             users.forEach(user => {
-                embed.addFields({ name: 'Value', value: `${user.value}`});
+                embed.addFields({ name: 'Value', value: `${user.userID}`});
             });
 
             // Send embed

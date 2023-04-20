@@ -48,17 +48,21 @@ module.exports = {
                     throw err;
                 }
 
+                // store the results in a variable
+                var teamData = result;
+                console.log(teamData);
+
                 // Create embed
                 const embed = new EmbedBuilder()
                 .setTitle('Cowboy or Indian?')
                 .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
                 // Get the current amount of points for the Cowboys
-                var currentPoints = result[0].teamPoints;
+                var currentPoints = teamData.teamPoints;
                 var newPoints = currentPoints + Math.floor(Math.random() * 10) + 1;
 
                 // Check if the user who last got points is the same as the user who is executing the command
-                var lastUser = result[0].teamLastUser;
+                var lastUser = teamData.teamLastUser;
                 var currentUser = interaction.user.id;
 
                 // If the user who last got points is the same as the user who is executing the command, return
@@ -70,7 +74,7 @@ module.exports = {
                     embed.setColor(0xff0000);
 
                     // send the embed
-                    interaction.reply({ embeds: [embed] });
+                    interaction.reply({ embeds: [embed], ephemeral: true });
                 }
 
                 // Check if the user who is executing the command has previously gotten points for the Indians
@@ -81,13 +85,17 @@ module.exports = {
                         throw err;
                     }
 
+                    // store the results in a variable
+                    var teamData = result;
+                    console.log(teamData);
+
                     // Create embed
                     const embed = new EmbedBuilder()
                     .setTitle('Cowboy or Indian?')
                     .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
                     // Get the current amount of points for the Cowboys
-                    var lastUser = result[0].teamLastUser;
+                    var lastUser = teamData.teamLastUser;
                     var currentUser = interaction.user.id;
 
                     // If the user who last got points is the same as the user who is executing the command, return
@@ -99,7 +107,7 @@ module.exports = {
                         embed.setColor(0xff0000);
 
                         // send the embed
-                        interaction.reply({ embeds: [embed] });
+                        interaction.reply({ embeds: [embed], ephemeral: true });
                     }
                 });
 
@@ -110,6 +118,7 @@ module.exports = {
                         mysqlConnection.end();
                         throw err;
                     }
+
                     // Create embed
                     const embed = new EmbedBuilder()
                     .setTitle('Cowboy or Indian?')
@@ -118,7 +127,7 @@ module.exports = {
                     // Log the new amount of points for the Cowboys
                     console.log("Cowboys points updated to " + newPoints);
                     // add the new points to an embed
-                    embed.addFields({ name: 'Cowboys', value: newPoints});
+                    embed.addFields({ name: 'Cowboys', value: `${newPoints}`});
                     // set the color to Gold
                     embed.setColor(0xffd700);
 
@@ -145,17 +154,21 @@ module.exports = {
                     throw err;
                 }
 
+                // store the results in a variable
+                var teamData = result;
+                console.log(teamData);
+
                 // Create embed
                 const embed = new EmbedBuilder()
                 .setTitle('Cowboy or Indian?')
                 .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
                 // Get the current amount of points for the Indians
-                var currentPoints = result[0].teamPoints;
+                var currentPoints = teamData.teamPoints;
                 var newPoints = currentPoints + Math.floor(Math.random() * 10) + 1;
 
                 // Check if the user who last got points is the same as the user who is executing the command
-                var lastUser = result[0].teamLastUser;
+                var lastUser = teamData.teamLastUser;
                 var currentUser = interaction.user.id;
 
                 // If the user who last got points is the same as the user who is executing the command, return
@@ -167,7 +180,7 @@ module.exports = {
                     embed.setColor(0xff0000);
 
                     // send the embed
-                    interaction.reply({ embeds: [embed] });
+                    interaction.reply({ embeds: [embed], ephemeral: true });
                 }
 
                 // Check if the user who is executing the command has previously gotten points for the Indians
@@ -178,13 +191,17 @@ module.exports = {
                         throw err;
                     }
 
+                    // store the results in a variable
+                    var teamData = result;
+                    console.log(teamData);
+
                     // Create embed
                     const embed = new EmbedBuilder()
                     .setTitle('Cowboy or Indian?')
                     .setDescription('Show your team spirit by getting points for your team!  Add the cowboy or indian option to the command to get points for your team!');
 
                     // Get the current amount of points for the Cowboys
-                    var lastUser = result[0].teamLastUser;
+                    var lastUser = teamData.teamLastUser;
                     var currentUser = interaction.user.id;
 
                     // If the user who last got points is the same as the user who is executing the command, return
@@ -196,7 +213,7 @@ module.exports = {
                         embed.setColor(0xff0000);
 
                         // send the embed
-                        interaction.reply({ embeds: [embed] });
+                        interaction.reply({ embeds: [embed], ephemeral: true });
                     }
                 });
 
@@ -216,7 +233,7 @@ module.exports = {
                     // Log the new amount of points for the Cowboys
                     console.log("Cowboys points updated to " + newPoints);
                     // add the new points to an embed
-                    embed.addFields({ name: 'Cowboys', value: newPoints});
+                    embed.addFields({ name: 'Cowboys', value: `${newPoints}`});
                     // set the color to Gold
                     embed.setColor(0xffd700);
 
