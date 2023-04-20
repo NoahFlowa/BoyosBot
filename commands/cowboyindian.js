@@ -46,7 +46,7 @@ module.exports = {
             mysqlConnection.connect();
 
             // Get the current amount of points for the Cowboys
-            var sql = "SELECT * FROM cowboyindian WHERE team = 'cowboys'";
+            var sql = "SELECT * FROM cowboyindian WHERE teamName = 'cowboys'";
             mysqlConnection.query(sql, function (err, result) {
                 if (err) {
                     mysqlConnection.end();
@@ -72,7 +72,7 @@ module.exports = {
                 }
 
                 // Check if the user who is executing the command has previously gotten points for the Indians
-                var sql = "SELECT * FROM cowboyindian WHERE team = 'indians'";
+                var sql = "SELECT * FROM cowboyindian WHERE teamName = 'indians'";
                 mysqlConnection.query(sql, function (err, result) {
                     if (err) {
                         mysqlConnection.end();
@@ -95,7 +95,7 @@ module.exports = {
                 });
 
                 // Update the amount of points for the Cowboys, set the last user to the user who is executing the command
-                var sql = "UPDATE cowboyindian SET points = " + newPoints + ", lastUser = '" + currentUser + "' WHERE team = 'cowboys'";
+                var sql = "UPDATE cowboyindian SET points = " + newPoints + ", lastUser = '" + currentUser + "' WHERE teamName = 'cowboys'";
                 mysqlConnection.query(sql, function (err, result) {
                     if (err) {
                         mysqlConnection.end();
@@ -119,7 +119,7 @@ module.exports = {
             mysqlConnection.connect();
 
             // Get the current amount of points for the Indians
-            var sql = "SELECT * FROM cowboyindian WHERE team = 'indians'";
+            var sql = "SELECT * FROM cowboyindian WHERE teamName = 'indians'";
             mysqlConnection.query(sql, function (err, result) {
                 if (err) {
                     mysqlConnection.end();
@@ -145,7 +145,7 @@ module.exports = {
                 }
 
                 // Check if the user who is executing the command has previously gotten points for the Indians
-                var sql = "SELECT * FROM cowboyindian WHERE team = 'cowboys'";
+                var sql = "SELECT * FROM cowboyindian WHERE teamName = 'cowboys'";
                 mysqlConnection.query(sql, function (err, result) {
                     if (err) {
                         mysqlConnection.end();
@@ -168,7 +168,7 @@ module.exports = {
                 });
 
                 // Update the amount of points for the Cowboys, set the last user to the user who is executing the command
-                var sql = "UPDATE cowboyindian SET points = " + newPoints + ", lastUser = '" + currentUser + "' WHERE team = 'indians'";
+                var sql = "UPDATE cowboyindian SET points = " + newPoints + ", lastUser = '" + currentUser + "' WHERE teamName = 'indians'";
                 mysqlConnection.query(sql, function (err, result) {
                     if (err) {
                         mysqlConnection.end();
