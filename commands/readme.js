@@ -47,7 +47,7 @@ module.exports = {
 
         readmeEmbed.addFields(
             { name: 'Commands available for the bot', value: '\u200B' },
-            { name: 'Command Name: ', value: changesText },
+            { name: 'Command Name: ', value: commandsText },
         );
 
         await interaction.reply({ embeds: [readmeEmbed] });
