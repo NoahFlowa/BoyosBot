@@ -22,6 +22,11 @@ module.exports = {
                 .setName('request')
                 .setDescription('Request a new feature')
                 .addStringOption(option => option.setName('request').setDescription('Enter your feature request').setRequired(true))
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('list')
+                .setDescription('List all feature requests')
         ),
     async execute(interaction) {
         // If the interaction is not a slash command, return
@@ -61,6 +66,29 @@ module.exports = {
 
             // reply to user
             await interaction.reply(`Thank you for your feature request: "${request}"`);
+        }
+
+        // If the slash command is /feature and subcommand is list, execute this code
+        if (interaction.commandName === 'feature' && interaction.options.getSubcommand() === 'list') {
+            // get user id
+            const userID = interaction.user.id;
+            
+            // connect to database
+            mysqlConnection.connect();
+
+            // get all feature requests from user
+            mysqlConnection.query('SELECT * FROM featureRequests WHERE createdBy = ?', [userID], function (error, results, fields) {
+                if (error) throw error;
+                const requestCount = results.length;
+                if (requestCount === 0) {
+                    return interaction.reply(`There are no feature requests.`);
+                }
+                const requestList = results.map(request => `**${request.request}**: ${request.createdAt}`).join('\n');
+                return interaction.reply(`There are ${requestCount} feature requests:\n${requestList}`);
+            });
+
+            // disconnect from database
+            mysqlConnection.end();
         }
     },
 };  
