@@ -1,12 +1,9 @@
 // Require the necessary discord.js classes
 const { SlashCommandBuilder } = require("discord.js");
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
-const ytdl = require('ytdl-core');
+const ytdl = require('@distube/ytdl-core');
 const ytSearch = require('yt-search');
 const { Queue, queueMap } = require('../classes/queueManager');
-
-// Require sodium for encryption
-const sodium = require('sodium');
 
 module.exports = {
 	data: new SlashCommandBuilder()

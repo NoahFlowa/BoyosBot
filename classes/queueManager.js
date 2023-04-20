@@ -1,10 +1,6 @@
 // Import shit
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
-
-// Require sodium for encryption
-const sodium = require('sodium');
+const { createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
+const ytdl = require('@distube/ytdl-core');
 
 // Create a queue class
 class Queue {
@@ -23,7 +19,7 @@ class Queue {
 
 		const song = this.songs[0];
 
-		const resource = createAudioResource(ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', opusEncoded: true, encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'], highWaterMark: 1 << 25 }), { inputType: 'ogg/opus', inlineVolume: true, encryption: sodium });
+		const resource = createAudioResource(ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', opusEncoded: true, encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'], highWaterMark: 1 << 25 }), { inputType: 'ogg/opus', inlineVolume: true });
 		resource.volume.setVolume(0.5);
 
 		this.player.play(resource);
@@ -36,7 +32,6 @@ class Queue {
 
 		this.player.on('error', error => {
 			console.error(`Error: ${error.message}`);
-			console.error(`QueueManager Error: ${error.stack}`);
 			this.songs.shift();
 			this.play();
 		});
