@@ -33,6 +33,8 @@ module.exports = {
                 throw err;
             }
 
+            const users = result;
+
             // Create embed
             const embed = new EmbedBuilder()
                 .setTitle("Test")
