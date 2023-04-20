@@ -5,7 +5,6 @@ const { SlashCommandBuilder } = require("discord.js");
 const mysql = require("mysql");
 const { hostName, port, userName, password, databaseName } = require('../../config.json');
 
-
 var mysqlConnection = mysql.createConnection({
     host: hostName,
     port: port,
@@ -37,8 +36,10 @@ module.exports = {
             const maxRequestsPerWeek = 5;
             const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 19).replace('T', ' ');
 
+            // connect to database
             mysqlConnection.connect();
 
+            // check if user has exceeded max requests per week
             mysqlConnection.query('SELECT COUNT(*) AS count FROM featureRequests WHERE createdBy = ? AND createdAt > ?', [userID, oneWeekAgo], function (error, results, fields) {
                 if (error) throw error;
                 const requestCount = results[0].count;
@@ -55,6 +56,10 @@ module.exports = {
                 if (error) throw error;
             });
     
+            // disconnect from database
+            mysqlConnection.end();
+
+            // reply to user
             await interaction.reply(`Thank you for your feature request: "${request}"`);
         }
     },
