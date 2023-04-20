@@ -25,11 +25,11 @@ module.exports = {
 			subcommand
 				.setName('add')
 				.setDescription('Add a game server to the list of game servers ran by The Boyos')
-				.addStringOption(option => option.setName('Game').setDescription('Enter the name of the game for the server').setRequired(true))
-				.addStringOption(option => option.setName('Server').setDescription('Enter the name of the server').setRequired(true))
-				.addStringOption(option => option.setName('IP').setDescription('Enter the IP address of the server').setRequired(true))
-				.addStringOption(option => option.setName('Port').setDescription('Enter the port of the server').setRequired(true))
-				.addStringOption(option => option.setName('Password').setDescription('Enter the password of the server').setRequired(false))
+				.addStringOption(option => option.setName('game').setDescription('Enter the name of the game for the server').setRequired(true))
+				.addStringOption(option => option.setName('server').setDescription('Enter the name of the server').setRequired(true))
+				.addStringOption(option => option.setName('ip').setDescription('Enter the IP address of the server').setRequired(true))
+				.addStringOption(option => option.setName('port').setDescription('Enter the port of the server').setRequired(true))
+				.addStringOption(option => option.setName('password').setDescription('Enter the password of the server').setRequired(false))
 		)
 		.addSubcommand(subcommand =>
 			subcommand

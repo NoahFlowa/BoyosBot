@@ -2,8 +2,8 @@
 
 #### Play.js:
 
-***This is the only way to play and search for videos**
-***DO NOT USE ytdl.validateURL()!  YOU WILL GET A TRIM() ERROR**
+**This is the only way to play and search for videos**
+**DO NOT USE ytdl.validateURL()!  YOU WILL GET A TRIM() ERROR**
 
 ```js
 // Search for youtube videos using yt-search
@@ -20,3 +20,7 @@ const video = videos.videos[0];
 ```
 
 ---
+
+#### Sub-Command Builder
+
+Subcommands have to be lower cased.  The command name as well as the options or else it generates an error.
