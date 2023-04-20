@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require("discord.js");
 
 // Import mysql connection
 const mysql = require("mysql");
-const { hostName, port, userName, password, databaseName } = require('../../config.json');
+const { hostName, port, userName, password, databaseName } = require('../config.json');
 
 var mysqlConnection = mysql.createConnection({
     host: hostName,
