@@ -229,7 +229,10 @@ module.exports = {
 
 				// delete server from database
 				mysqlConnection.query(`DELETE FROM gameServers WHERE serverName = '${interaction.options.getString('server')}'`, function (error, results, fields) {
-					if (error) throw error;
+					if (error) {
+                        mysqlConnection.end();
+                        throw error;
+                    }
 
                     // add embed fields for success message
                     embed.addFields({ name:'Success', value: `The server ${interaction.options.getString('server')} has been removed.` });
