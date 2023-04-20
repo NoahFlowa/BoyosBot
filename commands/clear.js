@@ -1,31 +1,39 @@
 // Import the required libraries
-const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
-const { CommandInteraction } = require('discord.js');
+const { SlashCommandBuilder, MessageEmbed } = require("@discordjs/builders");
+const { CommandInteraction } = require("discord.js");
 
 // Import mysql connection
 const mysql = require("mysql");
-const { hostName, port, userName, password, databaseName } = require('../config.json');
+const {
+  hostName,
+  port,
+  userName,
+  password,
+  databaseName,
+} = require("../config.json");
 
 function connectToDatabase() {
-    var mysqlConnection = mysql.createConnection({
-        host: hostName,
-        port: port,
-        user: userName,
-        password: password,
-        database: databaseName
-    });
+  var mysqlConnection = mysql.createConnection({
+    host: hostName,
+    port: port,
+    user: userName,
+    password: password,
+    database: databaseName,
+  });
 
-    return mysqlConnection;
+  return mysqlConnection;
 }
 
 // Create the SlashCommand data
 const data = new SlashCommandBuilder()
-  .setName('clear')
-  .setDescription('Clear a specified number of messages in the current channel.')
+  .setName("clear")
+  .setDescription(
+    "Clear a specified number of messages in the current channel."
+  )
   .addIntegerOption((option) =>
     option
-      .setName('amount')
-      .setDescription('The number of messages to delete (max 50).')
+      .setName("amount")
+      .setDescription("The number of messages to delete (max 50).")
       .setRequired(true)
   );
 
@@ -44,41 +52,51 @@ async function execute(interaction) {
       if (error) {
         mysqlConnection.end();
         console.error(error);
-        return interaction.reply({
-          content: 'An error occurred while checking your permissions.',
-          ephemeral: true,
-        });
+        const errorEmbed = new MessageEmbed()
+          .setTitle("Error")
+          .setColor(0xff0000)
+          .setDescription("An error occurred while checking your permissions.");
+        return interaction.reply({ embeds: [errorEmbed] });
       }
 
       if (results.length === 0) {
         // User does not exist or does not have permission
-        const embed = new EmbedBuilder()
-          .setTitle('Clear command')
-          .setColor(0xFF0000)
-          .setDescription('You do not have permission to use this command.');
+        const embed = new MessageEmbed()
+          .setTitle("Clear command")
+          .setColor(0xff0000)
+          .setDescription("You do not have permission to use this command.");
 
         mysqlConnection.end();
-        return interaction.reply({ embeds: [embed], ephemeral: true });
+        return interaction.reply({ embeds: [embed] });
       }
 
       // User exists and has permission
       // Get the amount option from the interaction
-      const amount = interaction.options.getInteger('amount');
+      const amount = interaction.options.getInteger("amount");
 
       // Check if the amount is valid (between 1 and 50)
       if (amount < 1 || amount > 50) {
         mysqlConnection.end();
+        const amountErrorEmbed = new MessageEmbed()
+          .setTitle("Invalid Amount")
+          .setColor(0xff0000)
+          .setDescription("The amount must be between 1 and 50.");
         return interaction.reply({
-          content: 'The amount must be between 1 and 50.',
+          embeds: [amountErrorEmbed],
           ephemeral: true,
         });
       }
 
       // Delete the specified number of messages (+1 to include the command message)
-      try {
+    try {
         await interaction.channel.bulkDelete(amount + 1, true);
+        const replyEmbed = new MessageEmbed()
+          .setTitle("Success")
+          .setColor(0x00ff00)
+          .setDescription(`Deleted ${amount} messages.`);
+
         const reply = await interaction.reply({
-          content: `Deleted ${amount} messages.`,
+          embeds: [replyEmbed],
           ephemeral: true,
         });
 
@@ -88,10 +106,11 @@ async function execute(interaction) {
         }, 3000);
       } catch (error) {
         console.error(error);
-        interaction.reply({
-          content: 'An error occurred while trying to delete messages.',
-          ephemeral: true,
-        });
+        const deletionErrorEmbed = new MessageEmbed()
+          .setTitle("Error")
+          .setColor(0xff0000)
+          .setDescription("An error occurred while trying to delete messages.");
+        interaction.reply({ embeds: [deletionErrorEmbed] });
       } finally {
         // Close the database connection
         mysqlConnection.end();
