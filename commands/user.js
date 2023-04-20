@@ -52,10 +52,12 @@ module.exports = {
 			// If the user exists in the database, send over their user information with .addFields()
 			// Users table schema: name, discordDisplayName, discordUserID, permissionID
 			if (results.length > 0) {
-				embed.addFields({ name: 'Name', value: results[0].name, inline: true });
-				embed.addFields({ name: 'Discord Display Name', value: results[0].discordDisplayName, inline: true });
-				embed.addFields({ name: 'Discord User ID', value: results[0].discordUserID, inline: true });
-				embed.addFields({ name: 'Permission Level', value: results[0].permissionID, inline: true });
+				embed.addFields(
+					{ name: 'Name', value: results[0].name, inline: true },
+					{ name: 'Discord Display Name', value: results[0].discordDisplayName, inline: true },
+					{ name: 'Discord User ID', value: results[0].discordUserID, inline: true },
+					{ name: 'Permission Level', value: results[0].permissionID, inline: true }
+				);
 			}
 
 			// Close the database connection
