@@ -70,7 +70,7 @@ module.exports = {
 			embed.addFields({ name: 'Error Message', value: `No command matching ${interaction.commandName} was found.  Error has been logged!` });
 
 			//reply to the user
-			return interaction.reply({ embeds: [embed] });
+			return interaction.reply({ embeds: [embed], ephemeral: true });
 		}
 
 		try {
@@ -112,7 +112,7 @@ module.exports = {
 			embed.addFields({ name: 'Error Message', value: `Error executing ${interaction.commandName}.  Error has been logged!` });
 
 			//reply to the user
-			return interaction.reply({ embeds: [embed] });
+			return interaction.reply({ embeds: [embed], ephemeral: true });
 		}
 	},
 };

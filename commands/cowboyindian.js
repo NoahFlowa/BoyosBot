@@ -52,11 +52,11 @@ module.exports = {
                     mysqlConnection.end();
                     throw err;
                 }
-                var currentPoints = result[0].points;
+                var currentPoints = result[0].teamPoints;
                 var newPoints = currentPoints + Math.floor(Math.random() * 10) + 1;
 
                 // Check if the user who last got points is the same as the user who is executing the command
-                var lastUser = result[0].lastUser;
+                var lastUser = result[0].teamLastUser;
                 var currentUser = interaction.user.id;
 
                 // If the user who last got points is the same as the user who is executing the command, return
@@ -78,7 +78,7 @@ module.exports = {
                         mysqlConnection.end();
                         throw err;
                     }
-                    var lastUser = result[0].lastUser;
+                    var lastUser = result[0].teamLastUser;
                     var currentUser = interaction.user.id;
 
                     // If the user who last got points is the same as the user who is executing the command, return
@@ -95,7 +95,7 @@ module.exports = {
                 });
 
                 // Update the amount of points for the Cowboys, set the last user to the user who is executing the command
-                var sql = "UPDATE cowboyindian SET points = " + newPoints + ", lastUser = '" + currentUser + "' WHERE teamName = 'cowboys'";
+                var sql = "UPDATE cowboyindian SET teamPoints = " + newPoints + ", lastUser = '" + currentUser + "' WHERE teamName = 'cowboys'";
                 mysqlConnection.query(sql, function (err, result) {
                     if (err) {
                         mysqlConnection.end();
@@ -125,11 +125,11 @@ module.exports = {
                     mysqlConnection.end();
                     throw err;
                 }
-                var currentPoints = result[0].points;
+                var currentPoints = result[0].teamPoints;
                 var newPoints = currentPoints + Math.floor(Math.random() * 10) + 1;
 
                 // Check if the user who last got points is the same as the user who is executing the command
-                var lastUser = result[0].lastUser;
+                var lastUser = result[0].teamLastUser;
                 var currentUser = interaction.user.id;
 
                 // If the user who last got points is the same as the user who is executing the command, return
@@ -151,7 +151,7 @@ module.exports = {
                         mysqlConnection.end();
                         throw err;
                     }
-                    var lastUser = result[0].lastUser;
+                    var lastUser = result[0].teamLastUser;
                     var currentUser = interaction.user.id;
 
                     // If the user who last got points is the same as the user who is executing the command, return
@@ -168,7 +168,7 @@ module.exports = {
                 });
 
                 // Update the amount of points for the Cowboys, set the last user to the user who is executing the command
-                var sql = "UPDATE cowboyindian SET points = " + newPoints + ", lastUser = '" + currentUser + "' WHERE teamName = 'indians'";
+                var sql = "UPDATE cowboyindian SET teamPoints = " + newPoints + ", lastUser = '" + currentUser + "' WHERE teamName = 'indians'";
                 mysqlConnection.query(sql, function (err, result) {
                     if (err) {
                         mysqlConnection.end();
