@@ -1,6 +1,6 @@
 // * Require necessary MySQL classes
 const mysql = require('mysql');
-const { hostName, port, userName, password, databaseName } = require('../config.json');
+const { hostName, port, userName, password, databaseName } = require('../../config.json');
 
 // create connection pool
 const pool = mysql.createPool({
