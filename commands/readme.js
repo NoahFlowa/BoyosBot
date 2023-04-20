@@ -30,6 +30,8 @@ module.exports = {
             { name: '\u200B', value: '\u200B' },
             { name: 'Feature Request', value: 'Request a feature for the bot!  {5 Per Week}', inline: true },
             { name: '\u200B', value: '\u200B' },
+            { name: 'Feature List', value: 'Tells the bot to grab all of your feature requests', inline: true },
+            { name: '\u200B', value: '\u200B' },
         )
         .setImage('https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024')
         .setTimestamp()
