@@ -32,20 +32,23 @@ module.exports = {
         .setAuthor({ name: '@NoahFlowa & @wymiller', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256', url: 'https://NoahOsterhout.com' })
         .setDescription('The Boyos Bot is a bot created by Noah Osterhout and Wyatt Miller. It is a bot that is used to play music in a voice channel, and to moderate the server. It is a work in progress, and is currently in beta. If you have any questions, please contact Noah Osterhout or Wyatt Miller.')
         .setThumbnail('https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024')
-        .addFields(
-            { name: 'If you would like a feature added to the bot, please use the feature request command.', value: '\u200B'},
-            { name: 'Changes to the bot', value: '\u200B' },
-        )
         .setTimestamp()
         .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
 
         // loop through the changesArray
+        let changesText = '';
+
         changesArray.forEach((changeObj) => {
             changeObj.changes.forEach((change) => {
-                changesEmbed.addFields({ name: 'Added Command', value: change, inline: true });
-                changesEmbed.addFields({ name: '\u200B', value: '\u200B' });
+                changesText += `${change}\n`;
             });
         });
+
+        changesEmbed.addFields(
+            { name: 'If you would like a feature added to the bot, please use the feature request command.', value: '\u200B'},
+            { name: 'Changes to the bot', value: '\u200B' },
+            { name: 'Added Commands', value: changesText },
+        );
 
         await interaction.reply({ embeds: [changesEmbed] });
     },

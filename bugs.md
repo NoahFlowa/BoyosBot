@@ -19,8 +19,17 @@ if (!videos || !videos.videos || !videos.videos.length) {
 const video = videos.videos[0];
 ```
 
+
+
 ---
 
 #### Sub-Command Builder
 
 Subcommands have to be lower cased.  The command name as well as the options or else it generates an error.
+
+
+---
+
+#### Discord Embeds
+
+Discord Embeds can only have a maximum of 25 items
