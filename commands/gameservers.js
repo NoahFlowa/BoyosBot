@@ -37,7 +37,7 @@ module.exports = {
 				.setDescription('Remove a game server from the list of game servers ran by The Boyos')
 				.addStringOption(option => option.setName('server').setDescription('Enter the name of the server').setRequired(true))
 		),
-	async execute(interaction) {
+	async execute(interaction, client) {
 		// If the interaction is not a slash command, return
 		if (!interaction.isCommand()) return;
 
