@@ -84,7 +84,7 @@ module.exports = {
                     return interaction.reply(`There are no feature requests.`);
                 }
                 const requestList = results.map(request => `**${request.request}**: ${request.createdAt}`).join('\n');
-                return interaction.reply(`There are ${requestCount} feature requests:\n${requestList}`);
+                return interaction.reply(`There are ${requestCount} feature requests from you:\n${requestList}`);
             });
 
             // disconnect from database
