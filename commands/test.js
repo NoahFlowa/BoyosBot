@@ -38,9 +38,9 @@ module.exports = {
                 .setTitle("Test")
                 .setDescription("Test command");
 
-            for (var i = 0; i < result.length; i++) {
-                embed.addFields({name: i, value: result[i]});
-            }
+            users.ForEach(user => {
+                embed.addFields({ name: 'Value', value: user.value});
+            });
 
             // Send embed
             interaction.reply({ embeds: [embed] });
