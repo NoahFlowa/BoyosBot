@@ -115,6 +115,11 @@ module.exports = {
                         .setDescription('Here are all of your feature requests for The Boyos Bot.')
                         .setThumbnail('https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=1024')
                         .setTimestamp()
+                        .addFields(
+                            { name: '\u200B', value: '\u200B', inline: true },
+                            { name: 'Request', value: 'Date', inline: true },
+                            { name: '\u200B', value: '\u200B', inline: true },
+                        )
                         .setFooter({ text: 'The Boyos Bot', iconURL: 'https://cdn.discordapp.com/avatars/1037147995940073533/cf9144e290ee7a0b8a06152ac8228410.png?size=256' });
         
                         for (const request of results) {
