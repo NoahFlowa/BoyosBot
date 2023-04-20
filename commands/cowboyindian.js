@@ -59,9 +59,10 @@ module.exports = {
                 .setDescription("This command can only be used in November.")
                 .setColor(0xff0000);
 
-            return interaction.reply({ embeds: [embed], ephemeral: true });
+            await interaction.reply({ embeds: [embed], ephemeral: true });
+            return;
         }
-        
+
         // If the interaction is not a slash command, return
         if (!interaction.isCommand()) return;
 
