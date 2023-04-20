@@ -13,6 +13,8 @@ module.exports = {
     async execute(interaction) {
         // If the interaction is not a slash command, return
         if (!interaction.isCommand()) return;
+
+        dasdasdasdasd;
     
         // If the slash command is /play, execute this code
         if (interaction.commandName === 'play') {
