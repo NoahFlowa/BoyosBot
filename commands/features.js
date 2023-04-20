@@ -2,20 +2,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 // Import mysql connection
-const mysql = require("mysql2")
-const { hostName, port, userName, password, databaseName } = require('../config.json');
-
-function connectToDatabase() {
-    var mysqlConnection = mysql.createConnection({
-        host: hostName,
-        port: port,
-        user: userName,
-        password: password,
-        database: databaseName
-    });
-
-    return mysqlConnection;
-}
+const { connectToDatabase } = require('../functions/databaseConnection.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
