@@ -1,6 +1,6 @@
 // Import shit
 const { createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
-const { stream } = require('play-dl');
+const ytdl = require('@distube/ytdl-core');
 
 // Create a queue class
 class Queue {
@@ -14,14 +14,12 @@ class Queue {
 		this.songs.push(song);
 	}
 
-	async play() {
+	play() {
 		if (!this.connection || this.songs.length === 0) return;
 
 		const song = this.songs[0];
 
-		const streamData = await stream(song.url, { quality: 'highestaudio', encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'], highWaterMark: 1 << 25 });
-		const resource = createAudioResource(streamData.stream, { inputType: streamData.type, inlineVolume: true });
-
+		const resource = createAudioResource(ytdl(song.url, { filter: 'audioonly', quality: 'highestaudio', opusEncoded: true, encoderArgs: ['-af', 'bass=g=10,dynaudnorm=f=200'], highWaterMark: 1 << 25 }), { inputType: 'ogg/opus', inlineVolume: true });
 		resource.volume.setVolume(0.5);
 
 		this.player.play(resource);
