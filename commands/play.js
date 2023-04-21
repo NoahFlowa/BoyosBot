@@ -32,7 +32,7 @@ module.exports = {
                     const searchResults = await search(trackName, { limit: 1, type: 'video' });
 
                     if (searchResults && searchResults.videos && searchResults.videos.length > 0) {
-                        const video = searchResults.videos[0];
+                        const video = searchResults[0];
 
                         // Proceed with the rest of the code
                         await playVideo(interaction, video);
@@ -51,7 +51,7 @@ module.exports = {
                     }
 
                     // Get the first video from the search results
-                    const video = searchResults.videos[0];
+                    const video = searchResults[0];
 
                     // Proceed with the rest of the code
                     await playVideo(interaction, video);
