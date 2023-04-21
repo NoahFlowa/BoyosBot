@@ -1,6 +1,6 @@
 // Require the necessary discord.js classes
 const { SlashCommandBuilder } = require("discord.js");
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
+const { joinVoiceChannel } = require('@discordjs/voice');
 const { validate, video_info, search } = require('play-dl');
 const { Queue, queueMap } = require('../classes/queueManager');
 
@@ -29,23 +29,23 @@ module.exports = {
 
                     // Search for the track on YouTube
                     const trackName = `${spotifyTrackInfo.name} ${spotifyTrackInfo.artists[0].name}`;
-                    const videos = await search(trackName, { limit: 1, type: 'video' });
-                    const video = videos[0];
+                    const searchResults = await search(trackName, { limit: 1, type: 'video' });
+                    const video = searchResults[0];
 
                     // Proceed with the rest of the code
                     await playVideo(interaction, video);
                 } else {
                     // Search for the video
-                    const videos = await search(input, { limit: 1, type: 'video' });
+                    const searchResults = await search(input, { limit: 1, type: 'video' });
 
                     // If no videos are found, reply with an error message and return
-                    if (!videos || !videos.videos || !videos.videos.length) {
-                        await interaction.followUp('No videos found.');
+                    if (!searchResults || searchResults.length === 0) {
+                        await interaction.editReply('No videos found.');
                         return;
                     }
 
                     // Get the first video from the search results
-                    const video = videos[0];
+                    const video = searchResults[0];
 
                     // Proceed with the rest of the code
                     await playVideo(interaction, video);
