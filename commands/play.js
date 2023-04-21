@@ -10,63 +10,32 @@ module.exports = {
 		.setDescription('Plays music in a voice channel requested by the user!')
 		.addStringOption(option => option.setName('input').setDescription('The YouTube URL or search query').setRequired(true)),
     async execute(interaction) {
-        // If the interaction is not a slash command, return
         if (!interaction.isCommand()) return;
-
-        // If the slash command is /play, execute this code
+    
         if (interaction.commandName === 'play') {
-            // Get the user input from the command option
             const input = interaction.options.getString('input');
-
-            // Defer the reply to the interaction
             await interaction.deferReply();
-
+    
             try {
-                // Check if the input is a Spotify URL
+                let video;
+    
                 if (validate(input, 'spotify')) {
-                    // Get Spotify track information
                     const spotifyTrackInfo = await video_info(input);
-
-                    console.log(spotifyTrackInfo);
-
-                    // Search for the track on YouTube
                     const trackName = `${spotifyTrackInfo.name} ${spotifyTrackInfo.artists[0].name}`;
                     const searchResults = await search(trackName, { limit: 1, type: 'video' });
-
-                    console.log(trackName);
-                    console.log(searchResults);
-
-                    if (searchResults && searchResults.length > 0) {
-                        const video = await extract(searchResults[0].url);
-
-                        // Proceed with the rest of the code
-                        await playVideo(interaction, video);
-                    } else {
-                        await interaction.editReply('No videos found.');
-                        return;
-                    }
+                    video = await extract(searchResults[0].url);
                 } else {
-                    // Search for the video
                     const searchResults = await search(input, { limit: 1, type: 'video' });
-
-                    console.log(searchResults);
-
-                    // If no videos are found, reply with an error message and return
-                    if (!searchResults || searchResults.length === 0) {
-                        await interaction.editReply('No videos found.');
-                        return;
-                    }
-
-                    // Get the first video from the search results
-                    const video = await extract(searchResults[0].url);
-
-                    console.log(video);
-
-                    // Proceed with the rest of the code
-                    await playVideo(interaction, video);
+                    video = await extract(searchResults[0].url);
                 }
+    
+                if (!video || video.LiveStreamData.isLive) {
+                    await interaction.editReply('No suitable videos found.');
+                    return;
+                }
+    
+                await playVideo(interaction, video);
             } catch (error) {
-                // If there is an error, reply with an error message and return
                 console.error('Error searching for video:', error);
                 await interaction.editReply('There was a problem searching for the video. Please try again later.');
             }
