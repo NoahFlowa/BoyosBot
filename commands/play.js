@@ -12,15 +12,15 @@ module.exports = {
     async execute(interaction) {
         // If the interaction is not a slash command, return
         if (!interaction.isCommand()) return;
-    
+
         // If the slash command is /play, execute this code
         if (interaction.commandName === 'play') {
             // Get the user input from the command option
             const input = interaction.options.getString('input');
-    
+
             // Defer the reply to the interaction
-            await interaction.reply({ content: `Searching for ${input}...`});
-    
+            await interaction.deferReply();
+
             try {
                 // Check if the input is a Spotify URL
                 if (validate(input, 'spotify')) {
@@ -30,16 +30,22 @@ module.exports = {
                     // Search for the track on YouTube
                     const trackName = `${spotifyTrackInfo.name} ${spotifyTrackInfo.artists[0].name}`;
                     const searchResults = await search(trackName, { limit: 1, type: 'video' });
-                    const video = searchResults.videos[0];
 
-                    // Proceed with the rest of the code
-                    await playVideo(interaction, video);
+                    if (searchResults && searchResults.videos && searchResults.videos.length > 0) {
+                        const video = searchResults.videos[0];
+
+                        // Proceed with the rest of the code
+                        await playVideo(interaction, video);
+                    } else {
+                        await interaction.editReply('No videos found.');
+                        return;
+                    }
                 } else {
                     // Search for the video
                     const searchResults = await search(input, { limit: 1, type: 'video' });
 
                     // If no videos are found, reply with an error message and return
-                    if (!searchResults || searchResults.length === 0) {
+                    if (!searchResults || !searchResults.videos || searchResults.videos.length === 0) {
                         await interaction.editReply('No videos found.');
                         return;
                     }
@@ -56,7 +62,7 @@ module.exports = {
                 await interaction.editReply('There was a problem searching for the video. Please try again later.');
             }
         }
-    },        
+    },
 };
 
 async function playVideo(interaction, video) {
