@@ -30,7 +30,7 @@ module.exports = {
                     // Search for the track on YouTube
                     const trackName = `${spotifyTrackInfo.name} ${spotifyTrackInfo.artists[0].name}`;
                     const searchResults = await search(trackName, { limit: 1, type: 'video' });
-                    const video = searchResults[0];
+                    const video = searchResults.videos[0];
 
                     // Proceed with the rest of the code
                     await playVideo(interaction, video);
@@ -45,7 +45,7 @@ module.exports = {
                     }
 
                     // Get the first video from the search results
-                    const video = searchResults[0];
+                    const video = searchResults.videos[0];
 
                     // Proceed with the rest of the code
                     await playVideo(interaction, video);
