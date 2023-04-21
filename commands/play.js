@@ -27,12 +27,17 @@ module.exports = {
                     // Get Spotify track information
                     const spotifyTrackInfo = await video_info(input);
 
+                    console.log(spotifyTrackInfo);
+
                     // Search for the track on YouTube
                     const trackName = `${spotifyTrackInfo.name} ${spotifyTrackInfo.artists[0].name}`;
                     const searchResults = await search(trackName, { limit: 1, type: 'video' });
 
-                    if (searchResults && searchResults.videos && searchResults.videos.length > 0) {
-                        const video = searchResults[0];
+                    console.log(trackName);
+                    console.log(searchResults);
+
+                    if (searchResults && searchResults.length > 0) {
+                        const video = await extract(searchResults[0].url);
 
                         // Proceed with the rest of the code
                         await playVideo(interaction, video);
@@ -44,14 +49,18 @@ module.exports = {
                     // Search for the video
                     const searchResults = await search(input, { limit: 1, type: 'video' });
 
+                    console.log(searchResults);
+
                     // If no videos are found, reply with an error message and return
-                    if (!searchResults || !searchResults.videos || searchResults.videos.length === 0) {
+                    if (!searchResults || searchResults.length === 0) {
                         await interaction.editReply('No videos found.');
                         return;
                     }
 
                     // Get the first video from the search results
-                    const video = searchResults[0];
+                    const video = await extract(searchResults[0].url);
+
+                    console.log(video);
 
                     // Proceed with the rest of the code
                     await playVideo(interaction, video);
