@@ -3,7 +3,7 @@ async function getInvite(guild) {
     const oldInvites = guild.invites;
 
     const usedInvite = newInvites.find((invite) => {
-        const oldInvite = oldInvites.get(invite.code);
+        const oldInvite = oldInvites.find((old) => old.code === invite.code);
         return oldInvite && invite.uses > oldInvite.uses;
     });
 
