@@ -1,15 +1,14 @@
 async function getInvite(guild) {
-    const newInvites = await guild.fetchInvites();
+    const newInvites = await guild.invites.fetch(); // Update this line
     const oldInvites = guild.invites;
-
-    const usedInvite = newInvites.find(inv => {
+    guild.invites = newInvites;
+    
+    const invite = newInvites.find(inv => {
         const oldInvite = oldInvites.get(inv.code);
-        return (oldInvite && inv.uses > oldInvite.uses) || (!oldInvite && inv.uses === 1);
+        return !oldInvite || inv.uses > oldInvite.uses;
     });
 
-    guild.invites = newInvites;
-
-    return usedInvite;
+    return invite;
 }
 
 module.exports = { getInvite };
