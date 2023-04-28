@@ -7,18 +7,16 @@ async function getInvite(guild) {
             return newInvites.first();
         }
 
-        const oldInvites = guild.invites;
-        let foundInvite = null;
+        const oldInvites = guild.invites.fetch(guild.id);
+        let foundInvite;
 
-        for (const [code, newInvite] of newInvites) {
-            const oldInvite = await oldInvites.fetch(code);
-
-            if (!oldInvite || newInvite.uses > oldInvite.uses) {
-                guild.invites.set(code, newInvite);
+        newInvites.forEach((newInvite) => {
+            const oldInvite = oldInvites.get(newInvite.code);
+            if (oldInvite && newInvite.uses > oldInvite.uses) {
                 foundInvite = newInvite;
-                break;
             }
-        }
+          });
+      
 
         return foundInvite;
     } catch (error) {
