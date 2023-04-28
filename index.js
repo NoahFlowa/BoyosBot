@@ -13,7 +13,7 @@ const { deployCommands } = require('./deploy-commands.js');
 const clientOptions = { restRequestTimeout: 60000 }; // 60 seconds
 
 // * Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.MessageContent] }, clientOptions);
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers] }, clientOptions);
 
 
 client.commands = new Collection();
