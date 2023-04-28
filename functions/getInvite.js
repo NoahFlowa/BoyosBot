@@ -8,7 +8,7 @@ const getInvite = async (guild) => {
 
         // Find the used invite by comparing the newInvites and oldInvites
         const usedInvite = newInvites.find((invite) => {
-            const oldInvite = oldInvites.get(invite.code);
+            const oldInvite = oldInvites.fetch(invite.code);
             return oldInvite ? invite.uses > oldInvite.uses : false;
         });
 
