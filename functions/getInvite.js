@@ -1,27 +1,30 @@
-const getInvite = async (guild) => {
+async function getInvite(guild) {
     try {
-        // Fetch the current invites from the guild
         const newInvites = await guild.invites.fetch();
 
-        // Fetch the old invites from the guild.invites property or create an empty Map
-        const oldInvites = guild.invites || new Map();
-
-        // Find the used invite by comparing the newInvites and oldInvites
-        const usedInvite = newInvites.find((invite) => {
-            const oldInvite = oldInvites.fetch(invite.code);
-            return oldInvite ? invite.uses > oldInvite.uses : false;
-        });
-
-        // Update the guild.invites property with the newInvites
+        if (!guild.invites || guild.invites.size === 0) {
         guild.invites = newInvites;
+        return newInvites.first();
+        }
 
-        return usedInvite;
+        const oldInvites = guild.invites;
+        let foundInvite = null;
+
+        for (const [code, newInvite] of newInvites) {
+        const oldInvite = oldInvites.get(code);
+
+        if (!oldInvite || newInvite.uses > oldInvite.uses) {
+            guild.invites.set(code, newInvite);
+            foundInvite = newInvite;
+            break;
+        }
+        }
+
+        return foundInvite;
     } catch (error) {
-        console.error(`Error in getInvite: ${error.message}`);
+        console.error('Error in getInvite:', error.message);
         return null;
     }
-};
-
-module.exports = {
-    getInvite,
-};
+}
+  
+module.exports = { getInvite };
