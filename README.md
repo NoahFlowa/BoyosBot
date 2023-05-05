@@ -7,16 +7,17 @@
       \ \  \   \ \  \ \  \   \ \  \_|\ \       \ \  \|\  \   \ \  \\\  \    \/  /  /    \ \  \\\  \   \|____|\  \        \ \  \|\  \   \ \  \\\  \       \ \  \ 
        \ \__\   \ \__\ \__\   \ \_______\       \ \_______\   \ \_______\ __/  / /       \ \_______\    ____\_\  \        \ \_______\   \ \_______\       \ \__\
         \|__|    \|__|\|__|    \|_______|        \|_______|    \|_______||\___/ /         \|_______|   |\_________\        \|_______|    \|_______|        \|__|
-                                                                         \|___|/                       \|_________|                         
-                                                                                                                                            
-                                                                                                                                            
+                                                                         \|___|/                       \|_________|                       
+                                                                                                                                          
+                                                                                                                                          
 </pre>
 
 ---
 
+The Boyos Bot is a Discord AIO bot that allows users to play music, add music to a queue, skip a song, do some Discord moderation commands and even do some unique The Boyos Discord only commands.  This bot is written in JavaScript, NodeJS and Docker by [@NoahOsterhout](https://github.com/NoahFlowa) and [@wymillerlinux](https://github.com/wymillerlinux).
 
+---
 
-The Boyos Bot is a Discord AIO bot that allows users to play music, add music to a queue, skip a song and even do some unique The Boyos Discord only commands.  This bot is written in JavaScript, NodeJS and Docker by [@NoahOsterhout](https://github.com/NoahFlowa) and [@wymillerlinux](https://github.com/wymillerlinux).  
+As of May 5th 2023, the Discord Bot Github repo is going public and allowing members of the Discord server to do pull requests to add features to the bot!
 
-Here's a fun fact!
-If you can read this, you're not suppose to be able to!!
+---
