@@ -39,9 +39,9 @@ for (const file of eventFiles) {
     console.log(`Loading event: ${event.name}`);
 
     if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args, client));
+        client.once(event.name, (...args) => event.execute(...args));
     } else {
-        client.on(event.name, (...args) => event.execute(...args, client));
+        client.on(event.name, (...args) => event.execute(...args));
     }
 }
 
