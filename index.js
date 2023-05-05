@@ -4,7 +4,7 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 // * Require ENV variables
-const { discordToken } = require('./config.json');
+const discordToken = process.env.discordToken;
 
 // * Require the deployCommands function
 const { deployCommands } = require('./deploy-commands.js');
