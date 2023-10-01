@@ -3,7 +3,7 @@ const { Client, Intents } = require('discord.js');
 // Import logError function
 const { logError } = require('../functions/logError.js');
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES] });
+const client = new Discord.Client({ ws: { intents: ['GUILDS', 'GUILD_PRESENCES'] } });
 
 module.exports = {
 	name: 'leagueEvent',
