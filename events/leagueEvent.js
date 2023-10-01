@@ -1,4 +1,4 @@
-const { Client, Intents } = require('discord.js');
+const Discord = require('discord.js');
 
 // Import logError function
 const { logError } = require('../functions/logError.js');
