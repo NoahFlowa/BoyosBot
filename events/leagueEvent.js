@@ -34,7 +34,7 @@ module.exports = {
 						console.log(`${member.user.username} is "banned" for playing League of Legends!`);
 
                         // Ban the user from the server
-                        await member.ban({ reason: 'Playing League of Legends' });
+                        //await member.ban({ reason: 'Playing League of Legends' });
 
 						await member.user.send('You have been "banned" for playing League of Legends!');
 					}, 30 * 60 * 1000);  // 30 minutes in milliseconds
