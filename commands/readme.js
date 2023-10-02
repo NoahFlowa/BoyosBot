@@ -11,8 +11,6 @@ const commandsArray = [
             "/join will make the bot join the voice channel you are in.",
             "/leave will make the bot leave the voice channel it is in.",
             "/ping will allow you to see the ping of the bot.",
-            "/play will allow you to play music in the voice channel the bot is in.",
-            "/queue will allow you to see the queue of songs that are going to be played.",
             "/readme will allow you to see the readme file for the bot.",
             "/server will allow you to see information about the server.",
             "/user will allow you to see information about you.",
